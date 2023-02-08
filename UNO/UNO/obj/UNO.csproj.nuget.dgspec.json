@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dallas\\Desktop\\College\\OOP\\C#\\UNO\\UNO\\UNO.csproj": {}
+    "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\UNO.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dallas\\Desktop\\College\\OOP\\C#\\UNO\\UNO\\UNO.csproj": {
+    "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\UNO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dallas\\Desktop\\College\\OOP\\C#\\UNO\\UNO\\UNO.csproj",
+        "projectUniqueName": "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\UNO.csproj",
         "projectName": "UNO",
-        "projectPath": "C:\\Users\\Dallas\\Desktop\\College\\OOP\\C#\\UNO\\UNO\\UNO.csproj",
+        "projectPath": "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\UNO.csproj",
         "packagesPath": "C:\\Users\\Dallas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dallas\\Desktop\\College\\OOP\\C#\\UNO\\UNO\\obj\\",
+        "outputPath": "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dallas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -60,7 +60,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\PROGRAM FILES\\DOTNET\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
