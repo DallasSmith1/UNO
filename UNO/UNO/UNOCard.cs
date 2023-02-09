@@ -55,7 +55,7 @@ namespace UNO
         /// set the colour of the card
         /// </summary>
         /// <param name="colour"></param>
-        public void SetColour(string colour)
+        private void SetColour(string colour)
         {
             this.colour = colour;
         }
@@ -71,7 +71,7 @@ namespace UNO
         /// set the value of the card
         /// </summary>
         /// <param name="value"></param>
-        public void SetValue(string value)
+        private void SetValue(string value)
         {
             this.value = value;
         }
@@ -87,7 +87,7 @@ namespace UNO
         /// set true if the card if a speical type pf card
         /// </summary>
         /// <param name="is_special"></param>
-        public void IsSpecial(bool is_special)
+        private void IsSpecial(bool is_special)
         {
             this.special = is_special;
         }
@@ -104,7 +104,7 @@ namespace UNO
         /// </summary>
         /// <param name="colour"></param>
         /// <param name="value"></param>
-        public void SetImage(string colour, string value)
+        private void SetImage(string colour, string value)
         {
             this.image = "./" + colour + value + ".jpg";
         }
