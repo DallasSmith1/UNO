@@ -1,0 +1,17 @@
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.exe
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.deps.json
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.runtimeconfig.json
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.dll
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.pdb
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.csproj.AssemblyReference.cache
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.Form1.resources
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.csproj.GenerateResource.cache
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.AssemblyInfoInputs.cache
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.AssemblyInfo.cs
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.csproj.CoreCompileInputs.cache
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.dll
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\refint\UNO.dll
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.pdb
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.genruntimeconfig.cache
+C:\Users\Dallas\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\ref\UNO.dll
