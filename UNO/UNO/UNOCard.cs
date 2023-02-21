@@ -16,6 +16,8 @@ namespace UNO
         static private string[] coloursList = {"red", "blue", "yellow", "green"};
         // to hold all the values of cards
         static private string[] valuesList = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "skip", "reverse", "+2", "+4", "swap"};
+        // the number of decks that are held in 1 deck
+        static private int numDecks = 2;
         // to hold the colour of the card
         private string colour = "";
         // to hold the value of the card
@@ -170,12 +172,40 @@ namespace UNO
         static public List<UNOCard> GenerateOrderedDeck()
         {
             ClearDeck();
-            foreach(string colour in UNOCard.coloursList)
+            int iter = 0;
+            while (iter < numDecks)
             {
-                foreach(string value in UNOCard.valuesList)
+                if(iter == 0)
                 {
-                    new UNOCard(colour, value);
+                    foreach(string colour in UNOCard.coloursList)
+                    {
+                        foreach(string value in UNOCard.valuesList)
+                        {
+                            if (value == "+4" || value == "swap")
+                            {
+                                new UNOCard("N/A", value);
+                            }
+                            else
+                            {
+                                new UNOCard(colour, value);
+                            }
+                        }
+                    }
                 }
+                else
+                {
+                    foreach (string colour in UNOCard.coloursList)
+                    {
+                        foreach (string value in UNOCard.valuesList)
+                        {
+                            if (value != "0" || value != "+4" || value != "swap")
+                            {
+                                new UNOCard(colour, value);
+                            }
+                        }
+                    }
+                }
+                iter++;
             }
             return GetDeck();
         }
