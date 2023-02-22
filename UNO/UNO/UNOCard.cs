@@ -165,6 +165,89 @@ namespace UNO
 
             return shuffledList;
         }
+
+        /// <summary>
+        /// used to sort a list of UNOCards by colour and number
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <returns></returns>
+        static public List<UNOCard> SortCards(List<UNOCard> deck, int isInt)
+        {
+            List<UNOCard> sortedDeck = new List<UNOCard> ();
+            List<UNOCard> holder = new List<UNOCard> ();
+            List<UNOCard> sort = new List<UNOCard> ();
+            for (int i = 0; i < coloursList.Length; i++)
+            {
+                // get current colour
+                foreach (UNOCard card in deck)
+                {
+                    if (card.GetColour() == coloursList[i])
+                    {
+                        sort.Add(card);
+                    }
+                }
+
+                // move special cards to holder list
+                for(int i3 = 0; i3 < sort.Count; i3++)
+                {
+                    if (sort[i3].IsSpecial())
+                    {
+                        holder.Add(sort[i3]);
+                        sort.RemoveAt(i3);
+                    }
+                }
+
+                // sort all number cards in sort list in order
+                bool changed = true;
+                while (changed)
+                {
+                    changed = false;
+                    int previous = 0;
+                    for (int i2 = 0; i2 < sort.Count; i2++)
+                    {
+                        UNOCard hold;
+                        int current = Int32.Parse(sort[i2].GetValue());
+                        if (i2 == 0)
+                        {
+                            previous = current;
+                        }
+                        else
+                        {
+                            if(current < previous)
+                            {
+                                changed = true;
+                                hold = sort[i2];
+                                sort[i2] = sort[i2 - 1];
+                                sort[i2 - 1] = hold;
+                            }
+                        }
+                    }
+                }
+
+                // move sorted numbers to sorted deck
+                foreach (UNOCard card in holder)
+                {
+                    sortedDeck.Add(card);
+                }
+
+                // move special cards to sorted deck
+                foreach (UNOCard card in holder)
+                {
+                    sortedDeck.Add(card);
+                }
+            }
+
+            //
+            foreach (UNOCard card in deck)
+            {
+                if (card.GetColour() == "N/A")
+                {
+                    sortedDeck.Add(card);
+                }
+            }
+
+            return sortedDeck;
+        }
         /// <summary>
         /// generate a brand new UNO deck 
         /// </summary>
