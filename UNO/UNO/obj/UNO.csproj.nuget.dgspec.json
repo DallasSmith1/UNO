@@ -1,28 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\UNO.csproj": {}
+    "C:\\Users\\dalla\\Desktop\\VS Programs\\UNO\\UNO\\UNO\\UNO.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\UNO.csproj": {
+    "C:\\Users\\dalla\\Desktop\\VS Programs\\UNO\\UNO\\UNO\\UNO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\UNO.csproj",
+        "projectUniqueName": "C:\\Users\\dalla\\Desktop\\VS Programs\\UNO\\UNO\\UNO\\UNO.csproj",
         "projectName": "UNO",
-        "projectPath": "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\UNO.csproj",
-        "packagesPath": "C:\\Users\\Dallas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dallas\\Documents\\GitHub\\UNO\\UNO\\UNO\\obj\\",
+        "projectPath": "C:\\Users\\dalla\\Desktop\\VS Programs\\UNO\\UNO\\UNO\\UNO.csproj",
+        "packagesPath": "C:\\Users\\dalla\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dalla\\Desktop\\VS Programs\\UNO\\UNO\\UNO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dallas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
+          "C:\\Users\\dalla\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0-windows"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Micro Focus\\Visual COBOL\\NuGetPackages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -60,7 +58,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
