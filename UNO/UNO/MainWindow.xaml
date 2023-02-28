@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="108,26,340,25" SelectionChanged="ListBox_SelectionChanged"/>
 
     </Grid>
 </Window>

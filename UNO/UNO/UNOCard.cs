@@ -171,7 +171,7 @@ namespace UNO
         /// </summary>
         /// <param name="deck"></param>
         /// <returns></returns>
-        static public List<UNOCard> SortCards(List<UNOCard> deck, int isInt)
+        static public List<UNOCard> SortCards(List<UNOCard> deck)
         {
             List<UNOCard> sortedDeck = new List<UNOCard> ();
             List<UNOCard> holder = new List<UNOCard> ();
