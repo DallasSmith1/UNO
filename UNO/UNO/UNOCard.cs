@@ -237,10 +237,10 @@ namespace UNO
                 }
             }
 
-            //
+            // move 
             foreach (UNOCard card in deck)
             {
-                if (card.GetColour() == "N/A")
+                if (card.GetColour() == "black")
                 {
                     sortedDeck.Add(card);
                 }
@@ -266,7 +266,7 @@ namespace UNO
                         {
                             if (value == "+4" || value == "swap")
                             {
-                                new UNOCard("N/A", value);
+                                new UNOCard("black", value);
                             }
                             else
                             {
