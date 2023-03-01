@@ -108,7 +108,7 @@ namespace UNO
         /// <param name="value"></param>
         private void SetImage(string colour, string value)
         {
-            this.image = "./" + colour + value + ".jpg";
+            this.image = "./" + colour + value + ".png";
         }
         /// <summary>
         /// returns the image path of the card
