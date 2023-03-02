@@ -70,6 +70,7 @@ namespace UNO
                 image.Source = card.GetImage();
                 image.Width = 150;
                 image.Height = 240;
+                // add event handlers to card
                 image.MouseEnter += Image_MouseEnter;
                 image.MouseLeave += Image_MouseLeave;
                 cards.Add(image);
@@ -149,13 +150,6 @@ namespace UNO
             lblPlayer4Number.Content = myLobby.GetPlayers()[3].GetNumberOfCards();
         }
 
-        private void Image_MouseEnter1(object sender, MouseEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
 
         /// <summary>
         /// refreshes the hand but with the hovered card
@@ -172,6 +166,7 @@ namespace UNO
                 image.Width = 150;
                 image.Height = 240;
                 cards.Add(image);
+                // if card is the same as the one hovered over (sender)
                 if (image == card)
                 {
                     focus = i;
@@ -191,6 +186,7 @@ namespace UNO
                 ColumnDefinition newCol = new ColumnDefinition();
                 if (i == focus)
                 {
+                    // create new length for that specific column
                     GridLength length = new GridLength(150);
                     newCol.Width = length;
                 }
@@ -341,7 +337,7 @@ namespace UNO
 
         private void Image_MouseLeave(object sender, MouseEventArgs e)
         {
-            refreshHands();
+            dehoverCard();
         }
         #endregion
 
