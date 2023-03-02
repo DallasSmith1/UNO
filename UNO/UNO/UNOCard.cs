@@ -193,7 +193,7 @@ namespace UNO
                     if (sort[i3].IsSpecial())
                     {
                         holder.Add(sort[i3]);
-                        sort.RemoveAt(i3);
+                        sort.Remove(holder[holder.Count-1]);
                     }
                 }
 
