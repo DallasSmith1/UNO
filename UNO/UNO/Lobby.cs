@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,8 @@ namespace UNO
         static private List<Lobby> lobbies = new List<Lobby> ();
         // maximum number of players
         static private int maxPlayers = 4;
+        // number of cards to start with
+        static private int beginWith = 7;
         // to store the hosts IP address
         private string hostIP;
         // to store true if the gamemode is multiplayer
@@ -40,6 +43,8 @@ namespace UNO
         {
             SetHostIP(host.getPlayerIP());
             SetGameMode(isMultiplayer);
+            SetRotation(true);
+            AddPlayer(host);
             AddLobby(this);
         }
         #endregion
@@ -70,6 +75,15 @@ namespace UNO
         static public List<Lobby> GetLobbies()
         {
             return Lobby.lobbies;
+        }
+
+        /// <summary>
+        /// returns the number of cards a player starts with in a match
+        /// </summary>
+        /// <returns></returns>
+        static public int GetNumOfStartCards()
+        {
+            return Lobby.beginWith;
         }
 
         /// <summary>
@@ -139,9 +153,18 @@ namespace UNO
         /// adds a card to the pickup deck
         /// </summary>
         /// <param name="card"></param>
-        private void AddCardToPickupDeck(UNOCard card)
+        public void AddCardToPickupDeck(UNOCard card)
         {
             this.pickupDeck.Add(card);
+        }
+
+        /// <summary>
+        /// adds a card to the the discard deck
+        /// </summary>
+        /// <param name="card"></param>
+        public void AddCardToDiscardDeck(UNOCard card)
+        {
+            this.discardDeck.Add(card);
         }
 
         /// <summary>
