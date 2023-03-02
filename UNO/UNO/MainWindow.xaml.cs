@@ -24,7 +24,21 @@ namespace UNO
         {
             InitializeComponent();
             cvsSinglePlayer.Visibility = Visibility.Hidden;
+            try
+            {
+                me = new Player();
+            }
+            catch (Exception e)
+            {
+                me = new Player("LocalHost");
+            }
         }
+
+        #region variables
+        Lobby myLobby;
+        Player me;
+        #endregion
+
 
         /// <summary>
         /// Starts a single player game
@@ -33,63 +47,37 @@ namespace UNO
         /// <param name="e"></param>
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            // create host player
-            Player player = new Player("LocalHost");
             // create lobby, add host player as host
-            Lobby lobby = new Lobby(player, false);
+            myLobby = new Lobby(me, false);
 
             // fill the rest of the players with bots
             for(int i = 0; i < 3; i++)
             {
-                lobby.AddPlayer(new Player(true));
+                myLobby.AddPlayer(new Player(true));
             }
 
             // create a new deck of cards
             foreach (UNOCard card in UNOCard.GenerateUnorderedDeck())
             {
-                lobby.AddCardToPickupDeck(card);
+                myLobby.AddCardToPickupDeck(card);
             }
 
             // distribute cards to each player (to the specified start amount in lobby)
             for (int i = 0; i < Lobby.GetNumOfStartCards(); i++)
             {
-                lobby.GetPlayers()[0].AddCard(lobby.GetNewCard());
-                lobby.GetPlayers()[1].AddCard(lobby.GetNewCard());
-                lobby.GetPlayers()[2].AddCard(lobby.GetNewCard());
-                lobby.GetPlayers()[3].AddCard(lobby.GetNewCard());
+                myLobby.GetPlayers()[0].AddCard(myLobby.GetNewCard());
+                myLobby.GetPlayers()[1].AddCard(myLobby.GetNewCard());
+                myLobby.GetPlayers()[2].AddCard(myLobby.GetNewCard());
+                myLobby.GetPlayers()[3].AddCard(myLobby.GetNewCard());
             }
 
             // add the players cards to the list boxes for display
             List<Player> players = new List<Player>();
-            foreach (Player playing in lobby.GetPlayers())
+            foreach (Player playing in myLobby.GetPlayers())
             {
                 players.Add(playing);
             }
 
-
-            for (int i = 0; i < players.Count; i++)
-            {
-                foreach (UNOCard card in players[i].GetCards())
-                {
-                    if (i == 0)
-                    {
-                        lbxPlayer1.Items.Add(card.GetImage());
-                    }
-                    else if (i == 1)
-                    {
-                        lbxPlayer2.Items.Add(card.GetImage());
-                    }
-                    if (i == 2)
-                    {
-                        lbxPlayer3.Items.Add(card.GetImage());
-                    }
-                    if (i == 3)
-                    {
-                        lbxPlayer4.Items.Add(card.GetImage());
-                    }
-                }
-
-            }
 
             cvsMainMenu.Visibility = Visibility.Hidden;
             cvsSinglePlayer.Visibility = Visibility.Visible;
@@ -122,6 +110,11 @@ namespace UNO
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void imgPickupDeck_Click(object sender, MouseButtonEventArgs e)
         {
 
         }

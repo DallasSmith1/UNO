@@ -121,7 +121,12 @@ namespace UNO
         public void AddCard(UNOCard card)
         {
             this.hand.Add(card);
-            UNOCard.SortCards(GetCards());
+            List<UNOCard> sortedHand = new List<UNOCard>(UNOCard.SortCards(this.GetCards()));
+            this.hand.Clear();
+            foreach (UNOCard sortedCard in sortedHand)
+            {
+                this.hand.Add(sortedCard);
+            }
         }
 
         /// <summary>

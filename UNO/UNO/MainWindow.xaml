@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UNO"
         mc:Ignorable="d"
-        Title="UNO" Width="1920" Height="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="UNO" Width="1920" Height="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/back.png" Background="#FFF38F48">
     <Grid>
         <Canvas x:Name="cvsMainMenu" Margin="0,-10,0,10">
             <Button x:Name="btnPlay" Content="Play" Background="Red" Height="73" HorizontalAlignment="Left" Canvas.Left="40" Canvas.Top="420" VerticalAlignment="Top" Width="385" Click="btnPlay_Click" FontSize="48"/>
@@ -13,15 +13,12 @@
             <Button x:Name="btnExit" Content="Quit" Background="Red" Height="73" Canvas.Left="40" Canvas.Top="801" Width="385" Click="btnExit_Click" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48"/>
             <Button x:Name="btnMultiplayer" Content="Multiplayer" Background="#FFA29898" BorderBrush="#FF655C5C" Height="76" Width="379" FontSize="48" HorizontalAlignment="Left" Canvas.Left="46" Canvas.Top="532" VerticalAlignment="Center" Click="btnMultiplayer_Click"/>
         </Canvas>
-        <Canvas x:Name="cvsSinglePlayer">
-            <ListBox x:Name="lbxPlayer1" Height="227" Width="189" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="111" Canvas.Top="135"/>
-            <ListBox x:Name="lbxPlayer2" Height="227" Width="189" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="429" Canvas.Top="135" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ListBox x:Name="lbxPlayer3" Height="227" Width="189" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="798" Canvas.Top="135" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ListBox x:Name="lbxPlayer4" Height="227" Width="189" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="1176" Canvas.Top="135" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Label Content="Player 1" Canvas.Left="160" Canvas.Top="58" FontSize="24"/>
-            <Label Content="Player 2" Canvas.Left="477" Canvas.Top="58" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Label Content="Player 3" Canvas.Left="846" Canvas.Top="58" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Label Content="Player 4" Canvas.Left="1224" Canvas.Top="58" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Canvas x:Name="cvsSinglePlayer" Margin="2618,-10,-2618,10">
+            <Label Content="Player 1" Canvas.Left="913" Canvas.Top="984" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Content="Player 2" Canvas.Left="87" Canvas.Top="322" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label Content="Player 3" Canvas.Left="913" Canvas.Top="10" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label Content="Player 4" Canvas.Left="1788" Canvas.Top="322" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image x:Name="imgPickupDeck" Height="250" Canvas.Left="724" Canvas.Top="313" Width="150" Source="/images/UNOCards/back.png" MouseDown="imgPickupDeck_Click"/>
         </Canvas>
     </Grid>
 </Window>

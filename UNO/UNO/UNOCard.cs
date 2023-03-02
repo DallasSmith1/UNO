@@ -174,10 +174,9 @@ namespace UNO
         static public List<UNOCard> SortCards(List<UNOCard> deck)
         {
             List<UNOCard> sortedDeck = new List<UNOCard> ();
-            List<UNOCard> holder = new List<UNOCard> ();
-            List<UNOCard> sort = new List<UNOCard> ();
             for (int i = 0; i < coloursList.Length; i++)
             {
+                List<UNOCard> sort = new List<UNOCard> ();
                 // get current colour
                 foreach (UNOCard card in deck)
                 {
@@ -186,52 +185,9 @@ namespace UNO
                         sort.Add(card);
                     }
                 }
-
-                // move special cards to holder list
-                for(int i3 = 0; i3 < sort.Count; i3++)
-                {
-                    if (sort[i3].IsSpecial())
-                    {
-                        holder.Add(sort[i3]);
-                        sort.Remove(holder[holder.Count-1]);
-                    }
-                }
-
-                // sort all number cards in sort list in order
-                bool changed = true;
-                while (changed)
-                {
-                    changed = false;
-                    int previous = 0;
-                    for (int i2 = 0; i2 < sort.Count; i2++)
-                    {
-                        UNOCard hold;
-                        int current = Int32.Parse(sort[i2].GetValue());
-                        if (i2 == 0)
-                        {
-                            previous = current;
-                        }
-                        else
-                        {
-                            if(current < previous)
-                            {
-                                changed = true;
-                                hold = sort[i2];
-                                sort[i2] = sort[i2 - 1];
-                                sort[i2 - 1] = hold;
-                            }
-                        }
-                    }
-                }
-
-                // move sorted numbers to sorted deck
-                foreach (UNOCard card in holder)
-                {
-                    sortedDeck.Add(card);
-                }
-
+               
                 // move special cards to sorted deck
-                foreach (UNOCard card in holder)
+                foreach (UNOCard card in sort)
                 {
                     sortedDeck.Add(card);
                 }
