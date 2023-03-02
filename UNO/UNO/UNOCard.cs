@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace UNO
 {
@@ -25,7 +27,7 @@ namespace UNO
         // to hold if true if the card is a special card
         private bool special = false;
         // to hold the file path to the image of the card
-        private string image = "";
+        private BitmapImage image;
         #endregion
 
         #region Constructors
@@ -108,13 +110,13 @@ namespace UNO
         /// <param name="value"></param>
         private void SetImage(string colour, string value)
         {
-            this.image = "./" + colour + value + ".png";
+            this.image = new BitmapImage(new Uri("/images/UNOCards/" + colour+value+".png", UriKind.Relative));
         }
         /// <summary>
         /// returns the image path of the card
         /// </summary>
         /// <returns></returns>
-        public string GetImage()
+        public BitmapImage GetImage()
         {
             return this.image;
         }
@@ -237,7 +239,7 @@ namespace UNO
                     {
                         foreach (string value in UNOCard.valuesList)
                         {
-                            if (value != "0" || value != "+4" || value != "swap")
+                            if (value != "0" && value != "+4" && value != "swap")
                             {
                                 new UNOCard(colour, value);
                             }

@@ -30,6 +30,8 @@ namespace UNO
         private string currentColour;
         // stores the current value
         private string currentValue;
+        // holds the top card of the discard pile
+        private UNOCard liveCard;
         // stores the direction fo the turns, true for clockwise
         private bool clockwise;
         // to store the next player in line
@@ -159,12 +161,13 @@ namespace UNO
         }
 
         /// <summary>
-        /// adds a card to the the discard deck
+        /// adds a card to the discard deck
         /// </summary>
         /// <param name="card"></param>
         public void AddCardToDiscardDeck(UNOCard card)
         {
             this.discardDeck.Add(card);
+            this.SetLiveCard(card);
         }
 
         /// <summary>
@@ -313,6 +316,24 @@ namespace UNO
         public Player GetNextPlayer()
         {
             return this.nextPlayer;
+        }
+
+        /// <summary>
+        /// sets the current live card (top of the discard pile)
+        /// </summary>
+        /// <param name="card"></param>
+        public void SetLiveCard(UNOCard card)
+        {
+            this.liveCard = card;
+        }
+
+        /// <summary>
+        /// getst he current live card (top of the discard pile)
+        /// </summary>
+        /// <returns></returns>
+        public UNOCard GetLiveCard()
+        {
+            return this.liveCard;
         }
         #endregion
 

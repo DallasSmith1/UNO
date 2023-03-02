@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,20 @@ namespace UNO
         {
             InitializeComponent();
             cvsSinglePlayer.Visibility = Visibility.Hidden;
+            checkForIP();
+        }
+
+        #region variables
+        Lobby myLobby;
+        Player me;
+        #endregion
+
+        #region methods
+        /// <summary>
+        /// checks for the ip and determines if miltiplayer is unlocked or not
+        /// </summary>
+        private void checkForIP()
+        {
             try
             {
                 me = new Player();
@@ -32,14 +47,176 @@ namespace UNO
             {
                 me = new Player("LocalHost");
             }
+
+            if (me.getPlayerIP() == "LocalHost")
+            {
+                btnMultiplayer.IsEnabled = false;
+            }
         }
 
-        #region variables
-        Lobby myLobby;
-        Player me;
+        /// <summary>
+        /// refreshes the UI
+        /// </summary>
+        private void refreshHands()
+        {
+            // refresh top discard deck card
+            imgDiscardDeck.Source = myLobby.GetLiveCard().GetImage();
+
+            // create a visual list of the cards
+            List<Image> cards = new List<Image>();
+            foreach (UNOCard card in me.GetCards())
+            {
+                Image image = new Image();
+                image.Source = card.GetImage();
+                image.Width = 150;
+                image.Height = 240;
+                image.MouseEnter += Image_MouseEnter;
+                image.MouseLeave += Image_MouseLeave;
+                cards.Add(image);
+            }
+
+
+            // add the cards to the hand dynamically
+            cvsMyHand.Children.Clear();
+
+            Grid newGrid = new Grid();
+            newGrid.Width = 1320;
+            newGrid.Height = 296;
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                ColumnDefinition newCol = new ColumnDefinition();
+                newGrid.ColumnDefinitions.Add(newCol);
+            }
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                Grid.SetColumn(cards[i],i);
+                newGrid.Children.Add(cards[i]);
+            }
+
+            cvsMyHand.Children.Add(newGrid);
+
+
+
+            // adds other player cards hand dynamically
+            List<Canvas> canvases = new List<Canvas>();
+            canvases.Add(cvsPlayer2);
+            canvases.Add(cvsPlayer3);
+            canvases.Add(cvsPlayer4);
+
+            for(int i = 0; i < canvases.Count; i++)
+            {
+                // create a list of all card images
+                List<Image> images = new List<Image>();
+                BitmapImage bitmap = new BitmapImage(new Uri("/images/UNOCards/back.png", UriKind.Relative));
+                for (int j = 0; j < myLobby.GetPlayers()[i+1].GetCards().Count; j++)
+                {
+                    Image image = new Image();
+                    image.Source = bitmap;
+                    image.Width = 125;
+                    image.Height = 210;
+                    images.Add(image);
+                }
+
+                // add the cards to the hands dynamically
+                canvases[i].Children.Clear();
+
+                Grid newGrid2 = new Grid();
+                newGrid2.Width = 485;
+                newGrid2.Height = 298;
+
+                for (int j = 0; j < myLobby.GetPlayers()[i+1].GetCards().Count; j++)
+                {
+                    ColumnDefinition newCol = new ColumnDefinition();
+                    newGrid2.ColumnDefinitions.Add(newCol);
+                }
+
+                for (int j = 0; j < myLobby.GetPlayers()[i+1].GetCards().Count; j++)
+                {
+                    Grid.SetColumn(images[j], j);
+                    newGrid2.Children.Add(images[j]);
+                }
+
+                canvases[i].Children.Add(newGrid2);
+            }
+
+
+            // update the number of cards
+            lblPlayer1Number.Content = myLobby.GetPlayers()[0].GetNumberOfCards();
+            lblPlayer2Number.Content = myLobby.GetPlayers()[1].GetNumberOfCards();
+            lblPlayer3Number.Content = myLobby.GetPlayers()[2].GetNumberOfCards();
+            lblPlayer4Number.Content = myLobby.GetPlayers()[3].GetNumberOfCards();
+        }
+
+        private void Image_MouseEnter1(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+        /// <summary>
+        /// refreshes the hand but with the hovered card
+        /// </summary>
+        /// <param name="card"></param>
+        private void hoverCard(Image card)
+        {
+            List<Image> cards = new List<Image>();
+            int focus = 0;
+            for(int i = 0; i < myLobby.GetPlayers()[0].GetCards().Count; i++)
+            {
+                Image image = new Image();
+                image.Source = myLobby.GetPlayers()[0].GetCards()[i].GetImage();
+                image.Width = 150;
+                image.Height = 240;
+                cards.Add(image);
+                if (image == card)
+                {
+                    focus = i;
+                }
+            }
+
+
+            // add the cards to the hand dynamically
+            cvsMyHand.Children.Clear();
+
+            Grid newGrid = new Grid();
+            newGrid.Width = 1320;
+            newGrid.Height = 296;
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                ColumnDefinition newCol = new ColumnDefinition();
+                if (i == focus)
+                {
+                    GridLength length = new GridLength(150);
+                    newCol.Width = length;
+                }
+                newGrid.ColumnDefinitions.Add(newCol);
+            }
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                Grid.SetColumn(cards[i], i);
+                newGrid.Children.Add(cards[i]);
+            }
+
+            cvsMyHand.Children.Add(newGrid);
+            
+        }
+
+        /// <summary>
+        /// dehovers all cards
+        /// </summary>
+        private void dehoverCard()
+        {
+            refreshHands();
+        }
         #endregion
 
-
+        #region Event Listeners
         /// <summary>
         /// Starts a single player game
         /// </summary>
@@ -78,7 +255,10 @@ namespace UNO
                 players.Add(playing);
             }
 
-
+            // move next card to the discard pile to start the game
+            myLobby.AddCardToDiscardDeck(myLobby.GetNewCard());
+            refreshHands();
+            // swap canvases
             cvsMainMenu.Visibility = Visibility.Hidden;
             cvsSinglePlayer.Visibility = Visibility.Visible;
 
@@ -114,9 +294,56 @@ namespace UNO
 
         }
 
+        /// <summary>
+        /// gets a new card and gives it to the players hand
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imgPickupDeck_Click(object sender, MouseButtonEventArgs e)
         {
-
+            myLobby.GetPlayers()[0].AddCard(myLobby.GetNewCard());
+            refreshHands();
         }
+
+        /// <summary>
+        /// quits the current single player game and returns to main menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnMainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            cvsSinglePlayer.Visibility = Visibility.Hidden;
+            cvsMainMenu.Visibility = Visibility.Visible;
+            checkForIP();
+            myLobby = null;
+        }
+
+        /// <summary>
+        /// checks if connected to router again, validating if multiplayer is enebaled
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            checkForIP();
+        }
+
+        /// <summary>
+        /// when hovered over a card, display the card
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Image card = (Image)sender;
+            hoverCard(card);
+        }
+
+        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        {
+            refreshHands();
+        }
+        #endregion
+
     }
 }
