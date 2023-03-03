@@ -72,6 +72,8 @@
     <None Remove="images\UNOCards\yellowreverse.png" />
     <None Remove="images\UNOCards\yellowskip.png" />
     <None Remove="images\UNOCards\yellowswap.png" />
+    <None Remove="images\visuals\cclockwise.gif" />
+    <None Remove="images\visuals\clockwise.gif" />
   </ItemGroup>
 
   <ItemGroup>
@@ -139,6 +141,8 @@
     <Resource Include="images\UNOCards\yellowreverse.png" />
     <Resource Include="images\UNOCards\yellowskip.png" />
     <Resource Include="images\UNOCards\yellowswap.png" />
+    <Resource Include="images\visuals\cclockwise.gif" />
+    <Resource Include="images\visuals\clockwise.gif" />
   </ItemGroup>
 
 </Project>

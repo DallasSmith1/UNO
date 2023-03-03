@@ -39,6 +39,7 @@
                 <Button x:Name="btnYellow" Content="" Height="150" Width="150" Background="#FFFFF500" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="150" Click="btnYellow_Click"/>
                 <Button x:Name="btnGreen" Content="" Height="150" Width="150" Background="#FF37FF00" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="150" Canvas.Top="150" Click="btnGreen_Click"/>
             </Canvas>
+            <Image Height="100" Canvas.Left="891" Canvas.Top="457" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/images/visuals/clockwise.gif" Visibility="Hidden" />
         </Canvas>
     </Grid>
 </Window>
