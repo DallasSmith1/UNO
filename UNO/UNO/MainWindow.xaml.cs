@@ -143,7 +143,6 @@ namespace UNO
                 Grid newGrid2 = new Grid();
                 newGrid2.Width = 485;
                 newGrid2.Height = 298;
-                newGrid2.Name = "Hand";
 
                 for (int j = 0; j < myLobby.GetPlayers()[i+1].GetCards().Count; j++)
                 {
@@ -285,41 +284,53 @@ namespace UNO
         /// <param name="e"></param>
         private void Backgroundworker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            // if +4 or swap cards, randomly pick a colour to change to
-            if (myLobby.GetLiveCard().GetColour() == "black")
+            // if placed a card
+            if(e.ProgressPercentage == 1)
             {
-                Random rnd = new Random();
+                // if +4 or swap card is played, randomly select a colour for it to change to
+                if (myLobby.GetLiveCard().GetColour() == "black")
+                {
+                    Random rnd = new Random();
 
-                int num = rnd.Next(3);
+                    int num = rnd.Next(3);
 
-                if (num == 0)
-                {
-                    myLobby.GetLiveCard().SetColour("red");
-                    myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
+                    if (num == 0)
+                    {
+                        myLobby.GetLiveCard().SetColour("red");
+                        myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
+                    }
+                    else if (num == 1)
+                    {
+                        myLobby.GetLiveCard().SetColour("green");
+                        myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
+                    }
+                    else if (num == 2)
+                    {
+                        myLobby.GetLiveCard().SetColour("blue");
+                        myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
+                    }
+                    else if (num == 3)
+                    {
+                        myLobby.GetLiveCard().SetColour("yellow");
+                        myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
+                    }
                 }
-                else if (num == 1)
+
+                // if any special cards were played, do the visuals for that card
+                if (myLobby.GetLiveCard().GetValue() == "reverse")
                 {
-                    myLobby.GetLiveCard().SetColour("green");
-                    myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
+                    UpdateRotationImage();
+                    ShowPopUp("reverse");
                 }
-                else if (num == 2)
+                else if (myLobby.GetLiveCard().GetValue() == "skip")
                 {
-                    myLobby.GetLiveCard().SetColour("blue");
-                    myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
+                    ShowPopUp("skip");
                 }
-                else if (num == 3)
-                {
-                    myLobby.GetLiveCard().SetColour("yellow");
-                    myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
-                }
+
             }
+            
             RefreshHands();
 
-            if (myLobby.GetLiveCard().GetValue() == "reverse")
-            {
-                UpdateRotationImage();
-                ShowPopUp("reverse");
-            }
         }
 
         /// <summary>
@@ -335,7 +346,7 @@ namespace UNO
             // while its not the localhosts turn
             while (myLobby.GetCurrentPlayer() != myLobby.GetPlayers()[0])
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(2500);
                 // holds the current player
                 Player currentPlayer = myLobby.GetCurrentPlayer();
 
@@ -365,10 +376,13 @@ namespace UNO
                         {
                             UpdateRotation();
                         }
+                        else if (newCard.GetValue() == "skip")
+                        {
+                            PerformSkip();
+                        }
                         myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
 
-                        backgroundworker.ReportProgress(0);
-                        Thread.Sleep(1000);
+                        backgroundworker.ReportProgress(1);
                     }
 
 
@@ -436,6 +450,48 @@ namespace UNO
                 myLobby.SetRotation(true);
             }
             myLobby.SetCurrentPlayer(myLobby.GetCurrentPlayer());
+        }
+
+        /// <summary>
+        /// skips the next players turn and sets the following player as the next player
+        /// </summary>
+        private void PerformSkip()
+        {
+            // find the next player
+            for (int i = 0; i < myLobby.GetPlayers().Count; i++)
+            {
+                // if found
+                if (myLobby.GetPlayers()[i] == myLobby.GetNextPlayer())
+                {
+                    // if clockwise
+                    if (myLobby.GetRotation())
+                    {
+                        // if end of list loop to beginning
+                        if ((i + 1) == 4)
+                        {
+                            myLobby.SetNextPlayer(myLobby.GetPlayers()[0]);
+                        }
+                        else
+                        {
+                            myLobby.SetNextPlayer(myLobby.GetPlayers()[i+1]);
+                        }
+                    }
+                    // if counter clockwise
+                    else
+                    {
+                        // if beginning of list loop to end
+                        if ((i - 1) == -1)
+                        {
+                            myLobby.SetNextPlayer(myLobby.GetPlayers()[3]);
+                        }
+                        else
+                        {
+                            myLobby.SetNextPlayer(myLobby.GetPlayers()[i - 1]);
+                        }
+                    }
+                    break;
+                }
+            }
         }
         #endregion
 
@@ -526,7 +582,7 @@ namespace UNO
         /// <param name="e"></param>
         private void imgPickupDeck_Click(object sender, MouseButtonEventArgs e)
         {
-            if (cvsColours.Visibility == Visibility.Hidden && myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[0])
+            if (cvsColours.Visibility == Visibility.Hidden && !backgroundworker.IsBusy)
             {
                 myLobby.GetPlayers()[0].AddCard(myLobby.GetNewCard());
                 RefreshHands();
@@ -611,6 +667,11 @@ namespace UNO
                                     UpdateRotation();
                                     UpdateRotationImage();
                                     ShowPopUp("reverse");
+                                }
+                                else if (myLobby.GetLiveCard().GetValue() == "skip")
+                                {
+                                    PerformSkip();
+                                    ShowPopUp("skip");
                                 }
                                 RunBotTurns();
                             }

@@ -249,7 +249,7 @@ namespace UNO
         {
             foreach (UNOCard card in hand)
             {
-                if (card.GetValue() == "+2" && card.GetColour() == lobby.GetCurrentColour())
+                if (card.GetValue() == "+2" && card.GetColour() == lobby.GetLiveCard().GetColour())
                 {
                     return card;
                 }
@@ -266,7 +266,7 @@ namespace UNO
         {
             foreach (UNOCard card in hand)
             {
-                if (card.IsSpecial() && card.GetColour() == lobby.GetCurrentColour() || card.GetColour() == "black")
+                if (card.IsSpecial() && card.GetColour() == lobby.GetLiveCard().GetColour() || card.GetColour() == "black")
                 {
                     return card;
                 }
