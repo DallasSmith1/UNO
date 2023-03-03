@@ -13,8 +13,29 @@
             <Button x:Name="btnExit" Content="Quit" Background="Red" Height="73" Canvas.Left="40" Canvas.Top="801" Width="385" Click="btnExit_Click" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48"/>
             <Button x:Name="btnMultiplayer" Content="Multiplayer" Background="#FFA29898" BorderBrush="#FF655C5C" Height="76" Width="379" FontSize="48" HorizontalAlignment="Left" Canvas.Left="46" Canvas.Top="532" VerticalAlignment="Center" Click="btnMultiplayer_Click"/>
             <Button x:Name="btnRefresh" Content="Refresh" Canvas.Left="462" Canvas.Top="532" Height="76" Width="150" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Click="btnRefresh_Click"/>
+            <Image Height="466" Canvas.Left="1215" Canvas.Top="270" Width="315" Source="/images/UNOCards/back.png" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="26.742"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image Height="466" Canvas.Left="838" Canvas.Top="271" Width="315" Source="/images/UNOCards/back.png" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-31.94"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image Height="532" Canvas.Left="924" Canvas.Top="190" Width="496" Source="/images/UNOCards/back.png"/>
         </Canvas>
-        <Canvas x:Name="cvsSinglePlayer" Margin="0,-10,0,10">
+        <Canvas x:Name="cvsSinglePlayer" Margin="2055,-10,-2055,10">
             <Label x:Name="lblPlayer1" Content="Player 1" Canvas.Left="913" Canvas.Top="984" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFF34848"/>
             <Label x:Name="lblPlayer2" Content="Player 2" Canvas.Left="77" Canvas.Top="232" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF38F48"/>
             <Label x:Name="lblPlayer3" Content="Player 3" Canvas.Left="913" Canvas.Top="10" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF38F48"/>
@@ -40,6 +61,7 @@
                 <Button x:Name="btnGreen" Content="" Height="150" Width="150" Background="#FF37FF00" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="150" Canvas.Top="150" Click="btnGreen_Click"/>
             </Canvas>
             <Image Height="100" Canvas.Left="891" Canvas.Top="457" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/images/visuals/clockwise.gif" Visibility="Hidden" />
+            <Image x:Name="imgPopup" Height="578" Canvas.Left="300" Canvas.Top="232" Width="1414" Visibility="Hidden"/>
         </Canvas>
     </Grid>
 </Window>
