@@ -273,6 +273,7 @@ namespace UNO
                     else if (player == GetPlayers()[i])
                     {
                         SetNextPlayer(GetPlayers()[i + 1]);
+                        break;
                     }
                 }    
             }
@@ -287,6 +288,7 @@ namespace UNO
                     else if (player == GetPlayers()[i])
                     {
                         SetNextPlayer(GetPlayers()[i - 1]);
+                        break;
                     }
                 }
             }

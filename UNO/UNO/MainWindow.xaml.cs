@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,11 +28,20 @@ namespace UNO
             InitializeComponent();
             cvsSinglePlayer.Visibility = Visibility.Hidden;
             checkForIP();
+            backgroundworker.DoWork += Backgroundworker_DoWork;
+            backgroundworker.ProgressChanged += Backgroundworker_ProgressChanged;
+            backgroundworker.RunWorkerCompleted += Backgroundworker_RunWorkerCompleted;
+            backgroundworker.WorkerReportsProgress = true;
+            backgroundworker.WorkerSupportsCancellation = true;
         }
+
+
 
         #region variables
         Lobby myLobby;
         Player me;
+        BackgroundWorker backgroundworker = new BackgroundWorker();
+
         #endregion
 
         #region methods
@@ -211,6 +221,7 @@ namespace UNO
             myLobby.SetLiveCard(liveCard);
             refreshHands();
             cvsColours.Visibility = Visibility.Hidden;
+            runBotTurns();
         }
 
         /// <summary>
@@ -218,12 +229,7 @@ namespace UNO
         /// </summary>
         private void runBotTurns()
         {
-            BackgroundWorker backgroundworker = new BackgroundWorker();
-
-            backgroundworker.DoWork += Backgroundworker_DoWork;
-            backgroundworker.ProgressChanged += Backgroundworker_ProgressChanged;
-            backgroundworker.WorkerReportsProgress = true;
-
+            btnMainMenu.IsEnabled = false;
             backgroundworker.RunWorkerAsync();
         }
 
@@ -234,15 +240,7 @@ namespace UNO
         /// <param name="e"></param>
         private void Backgroundworker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
-
-            while (myLobby.GetCurrentPlayer() != myLobby.GetPlayers()[0])
-            {
-                if (myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[1])
-                {
-                    lblPlayer2.Background.Opacity = 0;
-                }
-            }
+            refreshHands();
         }
 
         /// <summary>
@@ -253,9 +251,91 @@ namespace UNO
         /// <exception cref="NotImplementedException"></exception>
         private void Backgroundworker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            throw new NotImplementedException();
+            myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
+
+            // while its not the localhosts turn
+            while (myLobby.GetCurrentPlayer() != myLobby.GetPlayers()[0])
+            {
+                Thread.Sleep(1000);
+                // holds the current player
+                Player currentPlayer = myLobby.GetCurrentPlayer();
+
+                // while its the current players turn
+                while (currentPlayer == myLobby.GetCurrentPlayer())
+                {
+
+                    // process of picking a card to play
+                    UNOCard newCard = myLobby.GetCurrentPlayer().MakeMove(myLobby.GetNextPlayer(), myLobby);
+
+                    // if no cards to play grab a new card
+                    if (newCard == null)
+                    {
+                        newCard = myLobby.GetNewCard();
+                        myLobby.GetCurrentPlayer().AddCard(newCard);
+
+                        backgroundworker.ReportProgress(0);
+                        Thread.Sleep(1000);
+                    }
+                    // else play card
+                    else
+                    {
+                        // if +4 or swap cards, randomly pick a colour to change to
+                        /*
+                        if (newCard.GetValue() == "+4" || newCard.GetValue() == "swap")
+                        {
+                            Random rnd = new Random();
+
+                            int num = rnd.Next(3);
+
+                            if (num == 0)
+                            {
+                                newCard.SetColour("red");
+                                newCard.SetImage(newCard.GetColour(), newCard.GetValue());
+                            }
+                            else if (num == 1)
+                            {
+                                newCard.SetColour("green");
+                                newCard.SetImage(newCard.GetColour(), newCard.GetValue());
+                            }
+                            else if (num == 2)
+                            {
+                                newCard.SetColour("blue");
+                                newCard.SetImage(newCard.GetColour(), newCard.GetValue());
+                            }
+                            else if (num == 3)
+                            {
+                                newCard.SetColour("yellow");
+                                newCard.SetImage(newCard.GetColour(), newCard.GetValue());
+                            }
+                        }
+                        */
+
+
+                        myLobby.AddCardToDiscardDeck(newCard);
+                        myLobby.GetCurrentPlayer().RemoveCard(newCard);
+
+                        myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
+
+                        backgroundworker.ReportProgress(0);
+                        Thread.Sleep(1000);
+                    }
+
+
+                }
+            }
         }
 
+        /// <summary>
+        /// when the background work has finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void Backgroundworker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            refreshHands();
+            btnMainMenu.IsEnabled = true;
+        }
         #endregion
 
         #region Event Listeners
@@ -359,6 +439,7 @@ namespace UNO
         /// <param name="e"></param>
         private void btnMainMenu_Click(object sender, RoutedEventArgs e)
         {
+            backgroundworker.CancelAsync();
             cvsSinglePlayer.Visibility = Visibility.Hidden;
             cvsMainMenu.Visibility = Visibility.Visible;
             checkForIP();
@@ -403,9 +484,11 @@ namespace UNO
         /// <exception cref="NotImplementedException"></exception>
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (cvsColours.Visibility == Visibility.Hidden && myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[0])
+            // only if its your turn to play pick a card
+            if (cvsColours.Visibility == Visibility.Hidden && !backgroundworker.IsBusy)
             {
                 Image card = (Image)sender;
+                // get card that corresponds to the image player clicked
                 foreach (UNOCard unoCard in myLobby.GetPlayers()[0].GetCards().ToList<UNOCard>())
                 {
                     if (unoCard.GetImage() == card.Source)
@@ -418,6 +501,10 @@ namespace UNO
                             if (unoCard.GetValue() == "+4" || unoCard.GetValue() == "swap")
                             {
                                 cvsColours.Visibility = Visibility.Visible;
+                            }
+                            else
+                            {
+                                runBotTurns();
                             }
                         }
                     }

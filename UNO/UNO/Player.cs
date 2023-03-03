@@ -193,13 +193,13 @@ namespace UNO
                 {
                     return CheckForPickUpFour(this.GetCards());
                 }
-                else if (CheckForPickUpTwo(this.GetCards()) != null)
+                else if (CheckForPickUpTwo(this.GetCards(), lobby) != null)
                 {
-                    return CheckForPickUpTwo(this.GetCards());
+                    return CheckForPickUpTwo(this.GetCards(), lobby);
                 }
-                else if (CheckForSpecial(this.GetCards()) != null)
+                else if (CheckForSpecial(this.GetCards(), lobby) != null)
                 {
-                    return CheckForSpecial(this.GetCards());
+                    return CheckForSpecial(this.GetCards(), lobby);
                 }
                 else if (CheckForPlayableCard(this.GetCards(), lobby) != null)
                 {
@@ -245,11 +245,11 @@ namespace UNO
         /// </summary>
         /// <param name="hand"></param>
         /// <returns></returns>
-        private UNOCard? CheckForPickUpTwo(List<UNOCard> hand)
+        private UNOCard? CheckForPickUpTwo(List<UNOCard> hand, Lobby lobby)
         {
             foreach (UNOCard card in hand)
             {
-                if (card.GetValue() == "+2")
+                if (card.GetValue() == "+2" && card.GetColour() == lobby.GetCurrentColour())
                 {
                     return card;
                 }
@@ -262,11 +262,11 @@ namespace UNO
         /// </summary>
         /// <param name="hand"></param>
         /// <returns></returns>
-        private UNOCard? CheckForSpecial(List<UNOCard> hand)
+        private UNOCard? CheckForSpecial(List<UNOCard> hand, Lobby lobby)
         {
             foreach (UNOCard card in hand)
             {
-                if (card.IsSpecial())
+                if (card.IsSpecial() && card.GetColour() == lobby.GetCurrentColour() || card.GetColour() == "black")
                 {
                     return card;
                 }
