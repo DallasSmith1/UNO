@@ -153,7 +153,7 @@ namespace UNO
         /// <param name="cardToRemove"></param>
         public void RemoveCard(UNOCard cardToRemove)
         {
-            foreach (UNOCard cardInHand in GetCards())
+            foreach (UNOCard cardInHand in GetCards().ToList<UNOCard>())
             {
                 if (cardToRemove == cardInHand)
                 {
@@ -284,15 +284,7 @@ namespace UNO
         {
             foreach (UNOCard card in hand)
             {
-                if (card.GetColour() == lobby.GetCurrentColour())
-                {
-                    return card;
-                }
-                else if (card.GetValue() == lobby.GetCurrentValue())
-                {
-                    return card;
-                }
-                else if (card.GetValue() == "+4" || card.GetValue() == "swap")
+                if (lobby.IsPlayableCard(card))
                 {
                     return card;
                 }

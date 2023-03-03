@@ -28,6 +28,8 @@ namespace UNO
         private bool special = false;
         // to hold the file path to the image of the card
         private BitmapImage image;
+        // to hold the description of the card
+        private string description;
         #endregion
 
         #region Constructors
@@ -44,11 +46,8 @@ namespace UNO
             {
                 IsSpecial(true);
             }
-            //
-            // have to edit this after making the uno card images (inside of setImage function)
             SetImage(colour, value);
-            //
-            //
+            SetDescription(colour, value);
             AddCard(this);
         }
         #endregion
@@ -59,7 +58,7 @@ namespace UNO
         /// set the colour of the card
         /// </summary>
         /// <param name="colour"></param>
-        private void SetColour(string colour)
+        public void SetColour(string colour)
         {
             this.colour = colour;
         }
@@ -108,7 +107,7 @@ namespace UNO
         /// </summary>
         /// <param name="colour"></param>
         /// <param name="value"></param>
-        private void SetImage(string colour, string value)
+        public void SetImage(string colour, string value)
         {
             this.image = new BitmapImage(new Uri("/images/UNOCards/" + colour+value+".png", UriKind.Relative));
         }
@@ -259,6 +258,48 @@ namespace UNO
             List<UNOCard> newDeck = UNOCard.GenerateOrderedDeck();
             newDeck = UNOCard.ShuffleCards(newDeck);
             return newDeck;
+        }
+
+        /// <summary>
+        /// sets the description fo the card
+        /// </summary>
+        /// <param name="colour"></param>
+        /// <param name="value"></param>
+        private void SetDescription(string colour, string value)
+        {
+            if (value == "+2")
+            {
+                this.description = colour+" "+value+", makes the next player pick up 2 cards.";
+            }
+            else if(value == "+4")
+            {
+                this.description = value + ", makes the next player pick up 4 cards. Also allows you to change colours.";
+            }
+            else if (value == "swap")
+            {
+                this.description = value + ", change the current colour of the game.";
+            }
+            else if (value == "reverse")
+            {
+                this.description = colour + " " + value + ", inverts the order of turns.";
+            }
+            else if (value == "skip")
+            {
+                this.description = colour+" "+value+", skips the next players turn.";
+            }
+            else
+            {
+                this.description = colour + " " + value + ".";
+            }
+        }
+
+        /// <summary>
+        /// returns the descrption of the card
+        /// </summary>
+        /// <returns></returns>
+        public string GetDescription()
+        {
+            return this.description;
         }
         #endregion
     }

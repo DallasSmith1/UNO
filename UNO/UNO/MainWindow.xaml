@@ -15,10 +15,10 @@
             <Button x:Name="btnRefresh" Content="Refresh" Canvas.Left="462" Canvas.Top="532" Height="76" Width="150" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Click="btnRefresh_Click"/>
         </Canvas>
         <Canvas x:Name="cvsSinglePlayer" Margin="0,-10,0,10">
-            <Label Content="Player 1" Canvas.Left="913" Canvas.Top="984" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Label Content="Player 2" Canvas.Left="77" Canvas.Top="232" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label Content="Player 3" Canvas.Left="913" Canvas.Top="10" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label Content="Player 4" Canvas.Left="1760" Canvas.Top="232" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label x:Name="lblPlayer1" Content="Player 1" Canvas.Left="913" Canvas.Top="984" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFFF0404"/>
+            <Label x:Name="lblPlayer2" Content="Player 2" Canvas.Left="77" Canvas.Top="232" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label x:Name="lblPlayer3" Content="Player 3" Canvas.Left="913" Canvas.Top="10" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label x:Name="lblPlayer4" Content="Player 4" Canvas.Left="1760" Canvas.Top="232" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="imgPickupDeck" Height="239" Canvas.Left="717" Canvas.Top="392" Width="150" Source="/images/UNOCards/back.png" MouseDown="imgPickupDeck_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="imgDiscardDeck" Height="237" Canvas.Left="1025" Canvas.Top="392" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.58,0.252"/>
             <Canvas x:Name="cvsMyHand" Height="296" Width="1320" Canvas.Left="300" Canvas.Top="662" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -30,6 +30,15 @@
             <Label x:Name="lblPlayer2Number" Content="0" Canvas.Left="200" Canvas.Top="212" Height="72" Width="80" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="lblPlayer3Number" Content="0" Canvas.Left="1241" Canvas.Top="90" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="lblPlayer4Number" Content="0" Canvas.Left="1674" Canvas.Top="212" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image x:Name="imgHoverCard" Height="236" Canvas.Left="1674" Canvas.Top="662" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label x:Name="lblIsPlayable" Content="" Canvas.Left="1675" Canvas.Top="620" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
+            <TextBox x:Name="tbxCardDescription" Canvas.Left="1675" TextWrapping="Wrap" Canvas.Top="912" Width="150" Background="{x:Null}" HorizontalAlignment="Left" Height="68" VerticalAlignment="Center" FontSize="14" BorderBrush="{x:Null}" IsEnabled="False"/>
+            <Canvas x:Name="cvsColours" Height="300" Width="300" Canvas.Left="810" Canvas.Top="382" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" >
+                <Button x:Name="btnRed" Content="" Height="150" Width="150" Background="Red" BorderBrush="{x:Null}" Click="btnRed_Click"/>
+                <Button x:Name="btnBlue" Content="" Height="150" Width="150" Background="#FF001BFF" BorderBrush="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="150" Click="btnBlue_Click"/>
+                <Button x:Name="btnYellow" Content="" Height="150" Width="150" Background="#FFFFF500" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="150" Click="btnYellow_Click"/>
+                <Button x:Name="btnGreen" Content="" Height="150" Width="150" Background="#FF37FF00" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="150" Canvas.Top="150" Click="btnGreen_Click"/>
+            </Canvas>
         </Canvas>
     </Grid>
 </Window>

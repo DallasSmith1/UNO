@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -73,6 +74,7 @@ namespace UNO
                 // add event handlers to card
                 image.MouseEnter += Image_MouseEnter;
                 image.MouseLeave += Image_MouseLeave;
+                image.MouseDown += Image_MouseDown;
                 cards.Add(image);
             }
 
@@ -126,6 +128,7 @@ namespace UNO
                 Grid newGrid2 = new Grid();
                 newGrid2.Width = 485;
                 newGrid2.Height = 298;
+                newGrid2.Name = "Hand";
 
                 for (int j = 0; j < myLobby.GetPlayers()[i+1].GetCards().Count; j++)
                 {
@@ -148,8 +151,10 @@ namespace UNO
             lblPlayer2Number.Content = myLobby.GetPlayers()[1].GetNumberOfCards();
             lblPlayer3Number.Content = myLobby.GetPlayers()[2].GetNumberOfCards();
             lblPlayer4Number.Content = myLobby.GetPlayers()[3].GetNumberOfCards();
-        }
 
+            // refresh top card too
+            imgDiscardDeck.Source = myLobby.GetLiveCard().GetImage();
+        }
 
         /// <summary>
         /// refreshes the hand but with the hovered card
@@ -157,50 +162,29 @@ namespace UNO
         /// <param name="card"></param>
         private void hoverCard(Image card)
         {
-            List<Image> cards = new List<Image>();
-            int focus = 0;
-            for(int i = 0; i < myLobby.GetPlayers()[0].GetCards().Count; i++)
+            lblIsPlayable.Visibility = Visibility.Visible;
+            imgHoverCard.Visibility = Visibility.Visible;
+            tbxCardDescription.Visibility = Visibility.Visible;
+            imgHoverCard.Source = card.Source;
+
+            foreach (UNOCard unoCard in myLobby.GetPlayers()[0].GetCards())
             {
-                Image image = new Image();
-                image.Source = myLobby.GetPlayers()[0].GetCards()[i].GetImage();
-                image.Width = 150;
-                image.Height = 240;
-                cards.Add(image);
-                // if card is the same as the one hovered over (sender)
-                if (image == card)
+                if (unoCard.GetImage() == card.Source)
                 {
-                    focus = i;
+                    tbxCardDescription.Text = unoCard.GetDescription();
+
+                    if (myLobby.IsPlayableCard(unoCard))
+                    {
+                        lblIsPlayable.Content = "Playable";
+                        lblIsPlayable.Foreground = Brushes.Green;
+                    }
+                    else
+                    {
+                        lblIsPlayable.Content = "Not Playable";
+                        lblIsPlayable.Foreground = Brushes.Red;
+                    }
                 }
             }
-
-
-            // add the cards to the hand dynamically
-            cvsMyHand.Children.Clear();
-
-            Grid newGrid = new Grid();
-            newGrid.Width = 1320;
-            newGrid.Height = 296;
-
-            for (int i = 0; i < cards.Count; i++)
-            {
-                ColumnDefinition newCol = new ColumnDefinition();
-                if (i == focus)
-                {
-                    // create new length for that specific column
-                    GridLength length = new GridLength(150);
-                    newCol.Width = length;
-                }
-                newGrid.ColumnDefinitions.Add(newCol);
-            }
-
-            for (int i = 0; i < cards.Count; i++)
-            {
-                Grid.SetColumn(cards[i], i);
-                newGrid.Children.Add(cards[i]);
-            }
-
-            cvsMyHand.Children.Add(newGrid);
-            
         }
 
         /// <summary>
@@ -208,8 +192,70 @@ namespace UNO
         /// </summary>
         private void dehoverCard()
         {
+            lblIsPlayable.Visibility = Visibility.Hidden;
+            imgHoverCard.Visibility = Visibility.Hidden;
+            tbxCardDescription.Visibility = Visibility.Hidden;
             refreshHands();
         }
+
+        /// <summary>
+        /// sets the top card (only for +4 and swap cards) to a specific colour. USed only in the colour buttons
+        /// </summary>
+        /// <param name="colour"></param>
+        private void setTopCardColour(string colour)
+        {
+            myLobby.SetCurrentColour(colour);
+            UNOCard liveCard = myLobby.GetLiveCard();
+            liveCard.SetColour(colour);
+            liveCard.SetImage(liveCard.GetColour(), liveCard.GetValue());
+            myLobby.SetLiveCard(liveCard);
+            refreshHands();
+            cvsColours.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// runs the bots turns
+        /// </summary>
+        private void runBotTurns()
+        {
+            BackgroundWorker backgroundworker = new BackgroundWorker();
+
+            backgroundworker.DoWork += Backgroundworker_DoWork;
+            backgroundworker.ProgressChanged += Backgroundworker_ProgressChanged;
+            backgroundworker.WorkerReportsProgress = true;
+
+            backgroundworker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// runs the bots algorithmatic turns in the background thread
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Backgroundworker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
+
+            while (myLobby.GetCurrentPlayer() != myLobby.GetPlayers()[0])
+            {
+                if (myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[1])
+                {
+                    lblPlayer2.Background.Opacity = 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// after each bots make a move, update the screen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void Backgroundworker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Event Listeners
@@ -258,6 +304,8 @@ namespace UNO
             cvsMainMenu.Visibility = Visibility.Hidden;
             cvsSinglePlayer.Visibility = Visibility.Visible;
 
+            // set locahost as current player
+            myLobby.SetCurrentPlayer(myLobby.GetPlayers()[0]);
         }
 
         /// <summary>
@@ -297,8 +345,11 @@ namespace UNO
         /// <param name="e"></param>
         private void imgPickupDeck_Click(object sender, MouseButtonEventArgs e)
         {
-            myLobby.GetPlayers()[0].AddCard(myLobby.GetNewCard());
-            refreshHands();
+            if (cvsColours.Visibility == Visibility.Hidden && myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[0])
+            {
+                myLobby.GetPlayers()[0].AddCard(myLobby.GetNewCard());
+                refreshHands();
+            }
         }
 
         /// <summary>
@@ -331,14 +382,90 @@ namespace UNO
         /// <param name="e"></param>
         private void Image_MouseEnter(object sender, MouseEventArgs e)
         {
-            Image card = (Image)sender;
-            hoverCard(card);
+            hoverCard((Image)sender);
         }
 
+        /// <summary>
+        /// when the mouse moves off of a card, hide the side panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Image_MouseLeave(object sender, MouseEventArgs e)
         {
             dehoverCard();
         }
+
+        /// <summary>
+        /// when a card is clicked place it into the discard pile
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (cvsColours.Visibility == Visibility.Hidden && myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[0])
+            {
+                Image card = (Image)sender;
+                foreach (UNOCard unoCard in myLobby.GetPlayers()[0].GetCards().ToList<UNOCard>())
+                {
+                    if (unoCard.GetImage() == card.Source)
+                    {
+                        if (myLobby.IsPlayableCard(unoCard))
+                        {
+                            myLobby.AddCardToDiscardDeck(unoCard);
+                            myLobby.GetPlayers()[0].RemoveCard(unoCard);
+                            refreshHands();
+                            if (unoCard.GetValue() == "+4" || unoCard.GetValue() == "swap")
+                            {
+                                cvsColours.Visibility = Visibility.Visible;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// when the red button is clicked, change the top card to red
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnRed_Click(object sender, RoutedEventArgs e)
+        {
+            setTopCardColour("red");
+        }
+
+        /// <summary>
+        /// sets the top colour to blue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBlue_Click(object sender, RoutedEventArgs e)
+        {
+            setTopCardColour("blue");
+        }
+
+        /// <summary>
+        /// sets the top colour to yellow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnYellow_Click(object sender, RoutedEventArgs e)
+        {
+            setTopCardColour("yellow");
+        }
+
+        /// <summary>
+        /// sets the top colour to green
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGreen_Click(object sender, RoutedEventArgs e)
+        {
+            setTopCardColour("green");
+        }
+
+
         #endregion
 
     }

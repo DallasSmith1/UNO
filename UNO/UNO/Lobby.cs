@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -304,7 +305,7 @@ namespace UNO
         /// sets the next players turn
         /// </summary>
         /// <param name="player"></param>
-        private void SetNextPlayer(Player player)
+        public void SetNextPlayer(Player player)
         {
             this.nextPlayer = player;
         }
@@ -325,6 +326,23 @@ namespace UNO
         public void SetLiveCard(UNOCard card)
         {
             this.liveCard = card;
+
+            // if previous card is a +4 or swap, change it back to black
+            try
+            {
+                if (this.discardDeck[this.discardDeck.Count - 2].GetValue() == "+4" 
+                    || this.discardDeck[this.discardDeck.Count - 2].GetValue() == "swap")
+                {
+                    this.discardDeck[this.discardDeck.Count - 2].SetColour("black");
+                    this.discardDeck[this.discardDeck.Count - 2].SetImage(
+                        this.discardDeck[this.discardDeck.Count - 2].GetColour(),
+                        this.discardDeck[this.discardDeck.Count - 2].GetValue());
+                }
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+
+            }
         }
 
         /// <summary>
@@ -334,6 +352,24 @@ namespace UNO
         public UNOCard GetLiveCard()
         {
             return this.liveCard;
+        }
+
+        /// <summary>
+        /// returns bool value if the card is playable
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        public bool IsPlayableCard(UNOCard card)
+        {
+            if(card.GetColour() == this.liveCard.GetColour() || card.GetValue() == this.liveCard.GetValue() 
+                || card.GetValue() == "+4" || card.GetValue() == "swap")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         #endregion
 
