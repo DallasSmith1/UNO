@@ -72,8 +72,18 @@
     <None Remove="images\UNOCards\yellowreverse.png" />
     <None Remove="images\UNOCards\yellowskip.png" />
     <None Remove="images\UNOCards\yellowswap.png" />
-    <None Remove="images\visuals\cclockwise.gif" />
-    <None Remove="images\visuals\clockwise.gif" />
+    <None Remove="images\visuals\10.png" />
+    <None Remove="images\visuals\12.png" />
+    <None Remove="images\visuals\14.png" />
+    <None Remove="images\visuals\16.png" />
+    <None Remove="images\visuals\2.png" />
+    <None Remove="images\visuals\4.png" />
+    <None Remove="images\visuals\6.png" />
+    <None Remove="images\visuals\8.png" />
+    <None Remove="images\visuals\cclockwise.png" />
+    <None Remove="images\visuals\clockwise.png" />
+    <None Remove="images\visuals\reverse.png" />
+    <None Remove="images\visuals\skip.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -141,8 +151,18 @@
     <Resource Include="images\UNOCards\yellowreverse.png" />
     <Resource Include="images\UNOCards\yellowskip.png" />
     <Resource Include="images\UNOCards\yellowswap.png" />
-    <Resource Include="images\visuals\cclockwise.gif" />
-    <Resource Include="images\visuals\clockwise.gif" />
+    <Resource Include="images\visuals\10.png" />
+    <Resource Include="images\visuals\12.png" />
+    <Resource Include="images\visuals\14.png" />
+    <Resource Include="images\visuals\16.png" />
+    <Resource Include="images\visuals\2.png" />
+    <Resource Include="images\visuals\4.png" />
+    <Resource Include="images\visuals\6.png" />
+    <Resource Include="images\visuals\8.png" />
+    <Resource Include="images\visuals\cclockwise.png" />
+    <Resource Include="images\visuals\clockwise.png" />
+    <Resource Include="images\visuals\reverse.png" />
+    <Resource Include="images\visuals\skip.png" />
   </ItemGroup>
 
 </Project>

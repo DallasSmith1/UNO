@@ -35,7 +35,8 @@
             </Image>
             <Image Height="532" Canvas.Left="924" Canvas.Top="190" Width="496" Source="/images/UNOCards/back.png"/>
         </Canvas>
-        <Canvas x:Name="cvsSinglePlayer" Margin="2055,-10,-2055,10">
+        <Canvas x:Name="cvsSinglePlayer" Margin="0,-10,0,10">
+            <Image x:Name="imgRotation" Height="100" Canvas.Left="891" Canvas.Top="457" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/images/visuals/clockwise.png" Visibility="Visible" />
             <Label x:Name="lblPlayer1" Content="Player 1" Canvas.Left="913" Canvas.Top="984" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFF34848"/>
             <Label x:Name="lblPlayer2" Content="Player 2" Canvas.Left="77" Canvas.Top="232" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF38F48"/>
             <Label x:Name="lblPlayer3" Content="Player 3" Canvas.Left="913" Canvas.Top="10" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF38F48"/>
@@ -60,8 +61,7 @@
                 <Button x:Name="btnYellow" Content="" Height="150" Width="150" Background="#FFFFF500" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="150" Click="btnYellow_Click"/>
                 <Button x:Name="btnGreen" Content="" Height="150" Width="150" Background="#FF37FF00" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="150" Canvas.Top="150" Click="btnGreen_Click"/>
             </Canvas>
-            <Image Height="100" Canvas.Left="891" Canvas.Top="457" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/images/visuals/clockwise.gif" Visibility="Hidden" />
-            <Image x:Name="imgPopup" Height="578" Canvas.Left="300" Canvas.Top="232" Width="1414" Visibility="Hidden"/>
+            <Image x:Name="imgPopup" Height="304" Canvas.Left="480" Canvas.Top="122" Width="960" Visibility="Hidden"/>
         </Canvas>
     </Grid>
 </Window>

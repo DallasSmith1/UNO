@@ -33,7 +33,10 @@ namespace UNO
             backgroundworker.RunWorkerCompleted += Backgroundworker_RunWorkerCompleted;
             backgroundworker.WorkerReportsProgress = true;
             backgroundworker.WorkerSupportsCancellation = true;
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
         }
+
 
 
 
@@ -43,6 +46,7 @@ namespace UNO
         BackgroundWorker backgroundworker = new BackgroundWorker();
         byte[] NotSelectedRBG = { 243, 143, 72 };
         byte[] SelectedRBG = { 243, 72, 72 };
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         #endregion
 
         #region methods
@@ -310,6 +314,12 @@ namespace UNO
                 }
             }
             RefreshHands();
+
+            if (myLobby.GetLiveCard().GetValue() == "reverse")
+            {
+                UpdateRotationImage();
+                ShowPopUp("reverse");
+            }
         }
 
         /// <summary>
@@ -351,6 +361,10 @@ namespace UNO
                         myLobby.AddCardToDiscardDeck(newCard);
                         myLobby.GetCurrentPlayer().RemoveCard(newCard);
 
+                        if(newCard.GetValue() == "reverse")
+                        {
+                            UpdateRotation();
+                        }
                         myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
 
                         backgroundworker.ReportProgress(0);
@@ -372,6 +386,56 @@ namespace UNO
         {
             RefreshHands();
             btnMainMenu.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// pops up the popup image with the specified image
+        /// </summary>
+        /// <param name="image"></param>
+        private void ShowPopUp(string image)
+        {
+            imgPopup.Source = new BitmapImage(new Uri("/images/visuals/" + image + ".png", UriKind.Relative));
+            imgPopup.Visibility = Visibility.Visible;
+            dispatcherTimer.Start();
+        }
+
+        /// <summary>
+        /// hides the popup
+        /// </summary>
+        private void HidePopUp()
+        {
+            imgPopup.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// updates the rotation image to the correct rotation based on the rotation in the lobby
+        /// </summary>
+        private void UpdateRotationImage()
+        {
+            if (myLobby.GetRotation())
+            {
+                imgRotation.Source = new BitmapImage(new Uri("/images/visuals/clockwise.png", UriKind.Relative));
+            }
+            else
+            {
+                imgRotation.Source = new BitmapImage(new Uri("/images/visuals/cclockwise.png", UriKind.Relative));
+            }
+        }
+
+        /// <summary>
+        /// updates the rotation of the game and everything included within that
+        /// </summary>
+        private void UpdateRotation()
+        {
+            if (myLobby.GetRotation())
+            {
+                myLobby.SetRotation(false);
+            }
+            else
+            {
+                myLobby.SetRotation(true);
+            }
+            myLobby.SetCurrentPlayer(myLobby.GetCurrentPlayer());
         }
         #endregion
 
@@ -535,12 +599,19 @@ namespace UNO
                             myLobby.AddCardToDiscardDeck(unoCard);
                             myLobby.GetPlayers()[0].RemoveCard(unoCard);
                             RefreshHands();
+                            //if a +4 or swap card, show the colours canvas to select a colour
                             if (unoCard.GetValue() == "+4" || unoCard.GetValue() == "swap")
                             {
                                 cvsColours.Visibility = Visibility.Visible;
                             }
                             else
                             {
+                                if (myLobby.GetLiveCard().GetValue() == "reverse")
+                                {
+                                    UpdateRotation();
+                                    UpdateRotationImage();
+                                    ShowPopUp("reverse");
+                                }
                                 RunBotTurns();
                             }
                         }
@@ -589,6 +660,16 @@ namespace UNO
             SetTopCardColour("green");
         }
 
+        /// <summary>
+        /// triggered when the timer is ticked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DispatcherTimer_Tick(object? sender, EventArgs e)
+        {
+            dispatcherTimer.Stop();
+            HidePopUp();
+        }
 
         #endregion
 
