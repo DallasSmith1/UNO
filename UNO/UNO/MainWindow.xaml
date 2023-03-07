@@ -35,7 +35,7 @@
             </Image>
             <Image Height="532" Canvas.Left="924" Canvas.Top="190" Width="496" Source="/images/UNOCards/back.png"/>
         </Canvas>
-        <Canvas x:Name="cvsSinglePlayer" Margin="0,-10,0,10">
+        <Canvas x:Name="cvsSinglePlayer">
             <Image x:Name="imgRotation" Height="100" Canvas.Left="891" Canvas.Top="457" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/images/visuals/clockwise.png" Visibility="Visible" />
             <Label x:Name="lblPlayer1" Content="Player 1" Canvas.Left="913" Canvas.Top="984" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFF34848"/>
             <Label x:Name="lblPlayer2" Content="Player 2" Canvas.Left="77" Canvas.Top="232" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF38F48"/>
