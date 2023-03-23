@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace UNO
 {
@@ -295,6 +297,43 @@ namespace UNO
         }
 
         /// <summary>
+        /// returns the previous player that made a turn
+        /// </summary>
+        /// <returns></returns>
+        public Player? GetPreviousPlayer()
+        {
+            if (GetRotation())
+            {
+                for (int i = 0; i < Lobby.maxPlayers; i++)
+                {
+                    if (this.currentPlayer == this.GetPlayers()[i])
+                    {
+                        if (i == 0)
+                        {
+                            return this.GetPlayers()[3];
+                        }
+                        return this.GetPlayers()[i - 1];
+                    }
+                }
+            }
+            else
+            {
+                for (int i = Lobby.maxPlayers - 1; i > -1; i--)
+                {
+                    if (this.currentPlayer == this.GetPlayers()[i])
+                    {
+                        if (i == 3)
+                        {
+                            return this.GetPlayers()[0];
+                        }
+                        return this.GetPlayers()[i + 1];
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// gets the current player
         /// </summary>
         /// <returns></returns>
@@ -372,6 +411,15 @@ namespace UNO
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// returns the number o cards in the pickup deck
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumOfPickupCards()
+        {
+            return pickupDeck.Count;
         }
         #endregion
 

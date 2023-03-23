@@ -291,6 +291,66 @@ namespace UNO
             }
             return null;
         }
+
+        /// <summary>
+        /// chooses a colour to change a swap or +4 card. Picks best colours based off of own cards
+        /// </summary>
+        /// <returns></returns>
+        public string ChooseColour()
+        {
+            int red = 0;
+            int green = 0;
+            int yellow = 0;
+            int blue = 0;
+
+            // count each colour
+            foreach (UNOCard card in GetCards())
+            {
+                if (card.GetColour() == "red")
+                {
+                    red++;
+                }
+                if (card.GetColour() == "green")
+                {
+                    green++;
+                }
+                if (card.GetColour() == "yellow")
+                {
+                    yellow++;
+                }
+                if (card.GetColour() == "blue")
+                {
+                    blue++;
+                }
+            }
+
+            // sort colours from highest to lowest
+            int[] colours = new int[] { red, green, yellow, blue };
+            string[] coloursS = new string[] { "red", "green", "yellow", "blue" };
+            bool changed = true;
+
+            while (changed)
+            {
+                changed = false;
+                for(int i = 0; i < colours.Length-1; i++)
+                {
+                    if (colours[i] < colours[i + 1])
+                    {
+                        int holder = colours[i];
+                        colours[i] = colours[i + 1];
+                        colours[i + 1] = holder;
+
+                        string holderS = coloursS[i];
+                        coloursS[i] = coloursS[i + 1];
+                        coloursS[i + 1] = holderS;
+
+                        changed = true;
+                    }
+                }
+            }
+
+            return coloursS[0];
+        }
         #endregion
 
     }

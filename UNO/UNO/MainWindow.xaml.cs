@@ -37,14 +37,11 @@ namespace UNO
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
         }
 
-
-
-
         #region variables
         Lobby myLobby;
         Player me;
         BackgroundWorker backgroundworker = new BackgroundWorker();
-        byte[] NotSelectedRBG = { 243, 143, 72 };
+        byte[] NotSelectedRBG = { 71, 111, 54 };
         byte[] SelectedRBG = { 243, 72, 72 };
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         #endregion
@@ -171,6 +168,111 @@ namespace UNO
 
             // update the current players turn
             UpdateCurrentPlayerLabel();
+
+            //update the pickup deck
+            UpdatePickupDeckImage();
+        }
+
+        /// <summary>
+        /// does the exact same as refreshHands, just shows all the cards faces
+        /// </summary>
+        /// <param name="showAllCards"></param>
+        private void RefreshHand(bool showAllCards)
+        {
+            // refresh top discard deck card
+            imgDiscardDeck.Source = myLobby.GetLiveCard().GetImage();
+
+            // create a visual list of the cards
+            List<Image> cards = new List<Image>();
+            foreach (UNOCard card in me.GetCards())
+            {
+                Image image = new Image();
+                image.Source = card.GetImage();
+                image.Width = 150;
+                image.Height = 240;
+                cards.Add(image);
+            }
+
+
+            // add the cards to the hand dynamically
+            cvsMyHand.Children.Clear();
+
+            Grid newGrid = new Grid();
+            newGrid.Width = 1320;
+            newGrid.Height = 296;
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                ColumnDefinition newCol = new ColumnDefinition();
+                newGrid.ColumnDefinitions.Add(newCol);
+            }
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                Grid.SetColumn(cards[i], i);
+                newGrid.Children.Add(cards[i]);
+            }
+
+            cvsMyHand.Children.Add(newGrid);
+
+
+
+            // adds other player cards hand dynamically
+            List<Canvas> canvases = new List<Canvas>();
+            canvases.Add(cvsPlayer2);
+            canvases.Add(cvsPlayer3);
+            canvases.Add(cvsPlayer4);
+
+            for (int i = 0; i < canvases.Count; i++)
+            {
+                // create a list of all card images
+                List<Image> images = new List<Image>();
+                foreach (UNOCard card in myLobby.GetPlayers()[i + 1].GetCards())
+                {
+                    Image image = new Image();
+                    image.Source = card.GetImage();
+                    image.Width = 125;
+                    image.Height = 210;
+                    images.Add(image);
+                }
+
+                // add the cards to the hands dynamically
+                canvases[i].Children.Clear();
+
+                Grid newGrid2 = new Grid();
+                newGrid2.Width = 485;
+                newGrid2.Height = 298;
+
+                for (int j = 0; j < myLobby.GetPlayers()[i + 1].GetCards().Count; j++)
+                {
+                    ColumnDefinition newCol = new ColumnDefinition();
+                    newGrid2.ColumnDefinitions.Add(newCol);
+                }
+
+                for (int j = 0; j < myLobby.GetPlayers()[i + 1].GetCards().Count; j++)
+                {
+                    Grid.SetColumn(images[j], j);
+                    newGrid2.Children.Add(images[j]);
+                }
+
+                canvases[i].Children.Add(newGrid2);
+            }
+
+
+            // update the number of cards
+            lblPlayer1Number.Content = myLobby.GetPlayers()[0].GetNumberOfCards();
+            lblPlayer2Number.Content = myLobby.GetPlayers()[1].GetNumberOfCards();
+            lblPlayer3Number.Content = myLobby.GetPlayers()[2].GetNumberOfCards();
+            lblPlayer4Number.Content = myLobby.GetPlayers()[3].GetNumberOfCards();
+
+            // refresh top card too
+            imgDiscardDeck.Source = myLobby.GetLiveCard().GetImage();
+
+            // update the current players turn
+            UpdateCurrentPlayerLabel();
+
+            //update the pickup deck
+            UpdatePickupDeckImage();
         }
 
         /// <summary>
@@ -193,7 +295,7 @@ namespace UNO
                     if (myLobby.IsPlayableCard(unoCard))
                     {
                         lblIsPlayable.Content = "Playable";
-                        lblIsPlayable.Foreground = Brushes.Green;
+                        lblIsPlayable.Foreground = Brushes.WhiteSmoke;
                     }
                     else
                     {
@@ -212,7 +314,10 @@ namespace UNO
             lblIsPlayable.Visibility = Visibility.Hidden;
             imgHoverCard.Visibility = Visibility.Hidden;
             tbxCardDescription.Visibility = Visibility.Hidden;
-            RefreshHands();
+            if (cvsWinner.Visibility == Visibility.Hidden)
+            {
+                RefreshHands();
+            }
         }
 
         /// <summary>
@@ -228,7 +333,14 @@ namespace UNO
             myLobby.SetLiveCard(liveCard);
             RefreshHands();
             cvsColours.Visibility = Visibility.Hidden;
-            RunBotTurns();
+            if (myLobby.GetPlayers()[0].GetCards().Count == 0)
+            {
+                PerformWinner();
+            }
+            else
+            {
+                RunBotTurns();
+            }
         }
 
         /// <summary>
@@ -236,16 +348,8 @@ namespace UNO
         /// </summary>
         private void RunBotTurns()
         {
-            // set Localhosts player label to notselected and set the  
-            lblPlayer1.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(NotSelectedRBG[0], NotSelectedRBG[1], NotSelectedRBG[2]));
-            if (myLobby.GetRotation())
-            {
-                lblPlayer2.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(SelectedRBG[0], SelectedRBG[1], SelectedRBG[2]));
-            }
-            else
-            {
-                lblPlayer4.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(SelectedRBG[0], SelectedRBG[1], SelectedRBG[2]));
-            }
+            myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
+            UpdateCurrentPlayerLabel();
             btnMainMenu.IsEnabled = false;
             backgroundworker.RunWorkerAsync();
         }
@@ -290,26 +394,25 @@ namespace UNO
                 // if +4 or swap card is played, randomly select a colour for it to change to
                 if (myLobby.GetLiveCard().GetColour() == "black")
                 {
-                    Random rnd = new Random();
+                    // pick a colour based off of what the bot has in its hand
+                    string colour = myLobby.GetPreviousPlayer().ChooseColour();
 
-                    int num = rnd.Next(3);
-
-                    if (num == 0)
+                    if (colour == "red")
                     {
                         myLobby.GetLiveCard().SetColour("red");
                         myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
                     }
-                    else if (num == 1)
+                    else if (colour == "green")
                     {
                         myLobby.GetLiveCard().SetColour("green");
                         myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
                     }
-                    else if (num == 2)
+                    else if (colour == "blue")
                     {
                         myLobby.GetLiveCard().SetColour("blue");
                         myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
                     }
-                    else if (num == 3)
+                    else if (colour == "yellow")
                     {
                         myLobby.GetLiveCard().SetColour("yellow");
                         myLobby.GetLiveCard().SetImage(myLobby.GetLiveCard().GetColour(), myLobby.GetLiveCard().GetValue());
@@ -326,10 +429,26 @@ namespace UNO
                 {
                     ShowPopUp("skip");
                 }
+                else if (myLobby.GetLiveCard().GetValue() == "+2")
+                {
+                    ShowPopUp("2");
+                }
+                
+                else if (myLobby.GetLiveCard().GetValue() == "+4")
+                {
+                    ShowPopUp("4");
+                }
 
+                RefreshHands();
             }
-            
-            RefreshHands();
+            else if(e.ProgressPercentage == 2)
+            {
+                PerformWinner();
+            }
+            else
+            {
+                RefreshHands();
+            }
 
         }
 
@@ -341,17 +460,16 @@ namespace UNO
         /// <exception cref="NotImplementedException"></exception>
         private void Backgroundworker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
-
-            // while its not the localhosts turn
-            while (myLobby.GetCurrentPlayer() != myLobby.GetPlayers()[0])
+            bool winner = false;
+            // while its not the localhosts turn and while the winner banner isnt showing
+            while (myLobby.GetCurrentPlayer() != myLobby.GetPlayers()[0] && winner == false)
             {
                 Thread.Sleep(2500);
                 // holds the current player
                 Player currentPlayer = myLobby.GetCurrentPlayer();
 
                 // while its the current players turn
-                while (currentPlayer == myLobby.GetCurrentPlayer())
+                while (currentPlayer == myLobby.GetCurrentPlayer() && winner == false)
                 {
 
                     // process of picking a card to play
@@ -360,8 +478,11 @@ namespace UNO
                     // if no cards to play grab a new card
                     if (newCard == null)
                     {
-                        newCard = myLobby.GetNewCard();
-                        myLobby.GetCurrentPlayer().AddCard(newCard);
+                        if (myLobby.GetNumOfPickupCards() != 0)
+                        {
+                            newCard = myLobby.GetNewCard();
+                            myLobby.GetCurrentPlayer().AddCard(newCard);
+                        }
 
                         backgroundworker.ReportProgress(0);
                         Thread.Sleep(1000);
@@ -370,6 +491,13 @@ namespace UNO
                     else
                     {
                         myLobby.AddCardToDiscardDeck(newCard);
+
+                        // if the pickup deck was low/empty, update it with the newly dropped card
+                        if (myLobby.GetNumOfPickupCards() < 5)
+                        {
+                            myLobby.ResetPickupDeck();
+                        }
+
                         myLobby.GetCurrentPlayer().RemoveCard(newCard);
 
                         if(newCard.GetValue() == "reverse")
@@ -380,12 +508,28 @@ namespace UNO
                         {
                             PerformSkip();
                         }
-                        myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
+                        else if (newCard.GetValue() == "+2")
+                        {
+                            PerformPickup(2);
+                        }
+                        
+                        else if (newCard.GetValue() == "+4")
+                        {
+                            PerformPickup(4);
+                        }
+                        
 
-                        backgroundworker.ReportProgress(1);
+                        if (currentPlayer.GetCards().Count > 0)
+                        {
+                            myLobby.SetCurrentPlayer(myLobby.GetNextPlayer());
+                            backgroundworker.ReportProgress(1);
+                        }
+                        else
+                        {
+                            backgroundworker.ReportProgress(2);
+                            winner = true;
+                        }
                     }
-
-
                 }
             }
         }
@@ -398,7 +542,10 @@ namespace UNO
         /// <exception cref="NotImplementedException"></exception>
         private void Backgroundworker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
-            RefreshHands();
+            if (cvsWinner.Visibility == Visibility.Hidden)
+            {
+                RefreshHands();
+            }
             btnMainMenu.IsEnabled = true;
         }
 
@@ -493,6 +640,60 @@ namespace UNO
                 }
             }
         }
+
+        /// <summary>
+        /// picks up a specified number of cards (used for +2 and +4 cards)
+        /// </summary>
+        /// <param name="numOfCards"></param>
+        private void PerformPickup(int numOfCards)
+        {
+            for(int i = 0; i<numOfCards; i++)
+            {
+                if (myLobby.GetNumOfPickupCards() != 0)
+                {
+                    UNOCard newCard = myLobby.GetNewCard();
+                    myLobby.GetNextPlayer().AddCard(newCard);
+                }
+            }
+            PerformSkip();
+        }
+
+        /// <summary>
+        /// updates the pickup deck image, hides it if it is empty
+        /// </summary>
+        private void UpdatePickupDeckImage()
+        {
+            if (myLobby.GetNumOfPickupCards() == 0)
+            {
+                imgPickupDeck.Visibility = Visibility.Hidden;
+                imgPickupDeck.IsEnabled = false;
+            }
+            else
+            {
+                imgPickupDeck.Visibility = Visibility.Visible;
+                imgPickupDeck.IsEnabled = true;
+            }
+        }
+
+        /// <summary>
+        /// displays the winner of the game
+        /// </summary>
+        /// <param name="playerName"></param>
+        private void PerformWinner()
+        {
+            btnMainMenu.IsEnabled = false;
+            cvsWinner.Visibility = Visibility.Visible;
+            Player winner = myLobby.GetCurrentPlayer();
+            for (int i = 0; i < 4; i++)
+            {
+                if (winner == myLobby.GetPlayers()[i])
+                {
+                    lblPlayerWin.Content = "Player "+(i+1);
+                    break;
+                }
+            }
+            RefreshHand(true);
+        }
         #endregion
 
         #region Event Listeners
@@ -582,7 +783,8 @@ namespace UNO
         /// <param name="e"></param>
         private void imgPickupDeck_Click(object sender, MouseButtonEventArgs e)
         {
-            if (cvsColours.Visibility == Visibility.Hidden && !backgroundworker.IsBusy)
+            if (cvsColours.Visibility == Visibility.Hidden && !backgroundworker.IsBusy 
+                && myLobby.GetPlayers()[0].MakeMove(myLobby.GetNextPlayer(), myLobby) == null)
             {
                 myLobby.GetPlayers()[0].AddCard(myLobby.GetNewCard());
                 RefreshHands();
@@ -598,6 +800,7 @@ namespace UNO
         {
             backgroundworker.CancelAsync();
             cvsSinglePlayer.Visibility = Visibility.Hidden;
+            cvsWinner.Visibility = Visibility.Hidden;
             cvsMainMenu.Visibility = Visibility.Visible;
             CheckForIP();
             myLobby = null;
@@ -653,6 +856,13 @@ namespace UNO
                         if (myLobby.IsPlayableCard(unoCard))
                         {
                             myLobby.AddCardToDiscardDeck(unoCard);
+
+                            // if the pickup deck was low/empty, update it with the newly dropped card
+                            if (myLobby.GetNumOfPickupCards() < 5)
+                            {
+                                myLobby.ResetPickupDeck();
+                            }
+
                             myLobby.GetPlayers()[0].RemoveCard(unoCard);
                             RefreshHands();
                             //if a +4 or swap card, show the colours canvas to select a colour
@@ -673,7 +883,19 @@ namespace UNO
                                     PerformSkip();
                                     ShowPopUp("skip");
                                 }
-                                RunBotTurns();
+                                else if (myLobby.GetLiveCard().GetValue() == "+2")
+                                {
+                                    PerformPickup(2);
+                                    ShowPopUp("2");
+                                }
+                                if (myLobby.GetPlayers()[0].GetCards().Count == 0)
+                                {
+                                    PerformWinner();
+                                }
+                                else
+                                {
+                                    RunBotTurns();
+                                }
                             }
                         }
                     }
@@ -688,6 +910,11 @@ namespace UNO
         /// <param name="e"></param>
         private void btnRed_Click(object sender, RoutedEventArgs e)
         {
+            if (myLobby.GetLiveCard().GetValue() == "+4")
+            {
+                PerformPickup(4);
+                ShowPopUp("4");
+            }
             SetTopCardColour("red");
         }
 
@@ -698,6 +925,11 @@ namespace UNO
         /// <param name="e"></param>
         private void btnBlue_Click(object sender, RoutedEventArgs e)
         {
+            if (myLobby.GetLiveCard().GetValue() == "+4")
+            {
+                PerformPickup(4);
+                ShowPopUp("4");
+            }
             SetTopCardColour("blue");
         }
 
@@ -708,6 +940,11 @@ namespace UNO
         /// <param name="e"></param>
         private void btnYellow_Click(object sender, RoutedEventArgs e)
         {
+            if (myLobby.GetLiveCard().GetValue() == "+4")
+            {
+                PerformPickup(4);
+                ShowPopUp("4");
+            }
             SetTopCardColour("yellow");
         }
 
@@ -717,7 +954,13 @@ namespace UNO
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnGreen_Click(object sender, RoutedEventArgs e)
-        {
+        { 
+            if (myLobby.GetLiveCard().GetValue() == "+4")
+            {
+                PerformPickup(4);
+                ShowPopUp("4");
+            }
+
             SetTopCardColour("green");
         }
 
@@ -731,7 +974,22 @@ namespace UNO
             dispatcherTimer.Stop();
             HidePopUp();
         }
-
+      
+        /// <summary>
+        /// goes back tot he main menu after the game has finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEndGame_Click(object sender, RoutedEventArgs e)
+        {
+            btnMainMenu.IsEnabled = true;
+            backgroundworker.CancelAsync();
+            cvsSinglePlayer.Visibility = Visibility.Hidden;
+            cvsWinner.Visibility = Visibility.Hidden;
+            cvsMainMenu.Visibility = Visibility.Visible;
+            CheckForIP();
+            myLobby = null;
+        }
         #endregion
 
     }
