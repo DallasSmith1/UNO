@@ -139,7 +139,7 @@ namespace UNO
         }
 
         /// <summary>
-        /// returns the number of cards int he players hand
+        /// returns the number of cards in the players hand
         /// </summary>
         /// <returns></returns>
         public int GetNumberOfCards()
