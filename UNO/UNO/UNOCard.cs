@@ -269,11 +269,11 @@ namespace UNO
         {
             if (value == "+2")
             {
-                this.description = colour+" "+value+", makes the next player pick up 2 cards.";
+                this.description = colour+" "+value+ ", makes the next player pick up 2 cards. Also skips the next players turn.";
             }
             else if(value == "+4")
             {
-                this.description = value + ", makes the next player pick up 4 cards. Also allows you to change colours.";
+                this.description = value + ", makes the next player pick up 4 cards. Also allows you to change colours. Also skips the next players turn.";
             }
             else if (value == "swap")
             {

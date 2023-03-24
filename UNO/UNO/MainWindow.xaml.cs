@@ -737,6 +737,17 @@ namespace UNO
 
             // move next card to the discard pile to start the game
             myLobby.AddCardToDiscardDeck(myLobby.GetNewCard());
+
+            //if start card is black, make it red by default
+            if(myLobby.GetLiveCard().GetColour() == "black")
+            {
+                myLobby.SetCurrentColour("red");
+                UNOCard liveCard = myLobby.GetLiveCard();
+                liveCard.SetColour("red");
+                liveCard.SetImage(liveCard.GetColour(), liveCard.GetValue());
+                myLobby.SetLiveCard(liveCard);
+            }
+
             RefreshHands();
             // swap canvases
             cvsMainMenu.Visibility = Visibility.Hidden;
@@ -992,5 +1003,10 @@ namespace UNO
         }
         #endregion
 
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            Help help = new Help();
+            help.ShowDialog();
+        }
     }
 }

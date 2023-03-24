@@ -62,6 +62,7 @@
                 <Button x:Name="btnGreen" Content="" Height="150" Width="150" Background="#FF37FF00" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="150" Canvas.Top="150" Click="btnGreen_Click"/>
             </Canvas>
             <Image x:Name="imgPopup" Height="304" Canvas.Left="480" Canvas.Top="122" Width="960" Visibility="Hidden"/>
+            <Button x:Name="btnHelp" Content="Help" Canvas.Left="200" Canvas.Top="17" Height="54" Width="107" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Red" FontSize="24" Click="btnHelp_Click"/>
         </Canvas>
         <Canvas x:Name="cvsWinner" Margin="583,359,571,400" Background="#FFEFB671" Visibility="Hidden">
             <Label x:Name="lblWinner" Content="WINNER" Canvas.Left="80" Canvas.Top="-48" Height="209" Width="626" FontSize="150" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top">

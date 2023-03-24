@@ -40,3 +40,5 @@ C:\Users\micha\OneDrive\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\re
 C:\Users\micha\OneDrive\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.pdb
 C:\Users\micha\OneDrive\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.genruntimeconfig.cache
 C:\Users\micha\OneDrive\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\ref\UNO.dll
+C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\Help.g.cs
+C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\Help.baml
