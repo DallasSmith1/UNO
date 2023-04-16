@@ -464,7 +464,7 @@ namespace UNO
             // while its not the localhosts turn and while the winner banner isnt showing
             while (myLobby.GetCurrentPlayer() != myLobby.GetPlayers()[0] && winner == false)
             {
-                Thread.Sleep(2500);
+                Thread.Sleep(5000);
                 // holds the current player
                 Player currentPlayer = myLobby.GetCurrentPlayer();
 
