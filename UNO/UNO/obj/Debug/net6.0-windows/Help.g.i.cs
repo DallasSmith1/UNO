@@ -85,7 +85,7 @@ namespace UNO {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/UNO;V1.0.0.0;component/help.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/UNO;component/help.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Help.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

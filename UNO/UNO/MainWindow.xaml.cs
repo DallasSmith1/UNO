@@ -65,6 +65,10 @@ namespace UNO
             {
                 btnMultiplayer.IsEnabled = false;
             }
+            else
+            {
+                btnMultiplayer.IsEnabled = true;
+            }
         }
 
         /// <summary>
