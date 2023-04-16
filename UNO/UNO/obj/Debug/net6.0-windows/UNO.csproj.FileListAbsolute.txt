@@ -42,3 +42,7 @@ C:\Users\micha\OneDrive\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\UN
 C:\Users\micha\OneDrive\Documents\GitHub\UNO\UNO\UNO\obj\Debug\net6.0-windows\ref\UNO.dll
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\Help.g.cs
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\Help.baml
+C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\LobbySearch.g.cs
+C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\LobbySearch.baml
+C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\Settings.g.cs
+C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\Settings.baml

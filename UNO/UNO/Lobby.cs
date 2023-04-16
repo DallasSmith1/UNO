@@ -21,6 +21,8 @@ namespace UNO
         static private int beginWith = 7;
         // to store the hosts IP address
         private string hostIP;
+        // to store the port of the host
+        private int hostPort;
         // to store true if the gamemode is multiplayer
         private bool multiplayer;
         // to store all the players in the lobby
@@ -44,6 +46,11 @@ namespace UNO
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// creates a lobby
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="isMultiplayer"></param>
         public Lobby(Player host, bool isMultiplayer)
         {
             SetHostIP(host.getPlayerIP());
@@ -51,6 +58,22 @@ namespace UNO
             SetRotation(true);
             AddPlayer(host);
             AddLobby(this);
+        }
+
+        /// <summary>
+        /// creates a lobby witht he specific port number
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="isMultiplayer"></param>
+        /// <param name="port"></param>
+        public Lobby(Player host, bool isMultiplayer, int port)
+        {
+            SetHostIP(host.getPlayerIP());
+            SetGameMode(isMultiplayer);
+            SetRotation(true);
+            AddPlayer(host);
+            AddLobby(this);
+            SetHostPort(port);
         }
         #endregion
 
@@ -420,6 +443,24 @@ namespace UNO
         public int GetNumOfPickupCards()
         {
             return pickupDeck.Count;
+        }
+
+        /// <summary>
+        /// sets the host port of the lobby
+        /// </summary>
+        /// <param name="port"></param>
+        public void SetHostPort(int port)
+        {
+            this.hostPort = port;
+        }
+
+        /// <summary>
+        /// gets the hosts port of the lobby
+        /// </summary>
+        /// <returns></returns>
+        public int GetHostPort()
+        {
+            return this.hostPort;
         }
         #endregion
 

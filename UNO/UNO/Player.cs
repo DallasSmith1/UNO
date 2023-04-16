@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
+using System.IO;
+using System.Windows.Documents.Serialization;
 
 namespace UNO
 {
@@ -73,6 +75,7 @@ namespace UNO
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
                     this.playerIP = ip.ToString();
+                    return;
                 }
             }
             throw new Exception("Your device is not setup to a Local Network!");
@@ -349,7 +352,7 @@ namespace UNO
                 }
             }
 
-            return coloursS[0];
+            return coloursS[3];
         }
         #endregion
 

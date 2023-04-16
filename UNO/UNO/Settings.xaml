@@ -1,0 +1,31 @@
+﻿<Window x:Class="UNO.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UNO"
+        mc:Ignorable="d"
+        Title="Settings" Height="249" Width="442" Background="#FF476F36" WindowStartupLocation="CenterScreen" MinWidth="442" MaxWidth="442" MinHeight="249" MaxHeight="249">
+    <Grid>
+        <Label Content="Master Volume" HorizontalAlignment="Left" Margin="15,24,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="sdrMaster" HorizontalAlignment="Left" Margin="102,28,0,0" VerticalAlignment="Top" Width="273" Maximum="100" Value="100" ValueChanged="MasterChange" SmallChange="1" Cursor="Hand"/>
+        <Label x:Name="lblMaster" Content="100" HorizontalAlignment="Left" Margin="386,24,0,0" VerticalAlignment="Top"/>
+        <Label Content="SFX Volume" HorizontalAlignment="Left" Margin="24,78,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="sdrSFX" HorizontalAlignment="Left" Margin="102,82,0,0" VerticalAlignment="Top" Width="273" Maximum="100" Value="100" ValueChanged="SFXChanged" Cursor="Hand"/>
+        <Label x:Name="lblSFX" Content="100" HorizontalAlignment="Left" Margin="386,78,0,0" VerticalAlignment="Top"/>
+        <Label Content="Music Volume" HorizontalAlignment="Left" Margin="15,132,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="sdrMusic" HorizontalAlignment="Left" Margin="102,136,0,0" VerticalAlignment="Top" Width="273" Maximum="100" Value="100" ValueChanged="MusicChange" Cursor="Hand"/>
+        <Label x:Name="lblMusic" Content="100" HorizontalAlignment="Left" Margin="386,132,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnApply" Content="Apply" HorizontalAlignment="Center" Margin="0,168,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="29" Width="74" Background="Red" Click="btnApply_Click">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.515"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+
+    </Grid>
+</Window>

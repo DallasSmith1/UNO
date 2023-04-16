@@ -399,7 +399,7 @@ namespace UNO
                 if (myLobby.GetLiveCard().GetColour() == "black")
                 {
                     // pick a colour based off of what the bot has in its hand
-                    string colour = myLobby.GetPreviousPlayer().ChooseColour();
+                    string colour = myLobby.GetCurrentPlayer().ChooseColour();
 
                     if (colour == "red")
                     {
@@ -468,7 +468,7 @@ namespace UNO
             // while its not the localhosts turn and while the winner banner isnt showing
             while (myLobby.GetCurrentPlayer() != myLobby.GetPlayers()[0] && winner == false)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(3000);
                 // holds the current player
                 Player currentPlayer = myLobby.GetCurrentPlayer();
 
@@ -778,7 +778,10 @@ namespace UNO
         /// <param name="e"></param>
         private void btnMultiplayer_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Hide();
+            LobbySearch search = new LobbySearch(me.getLobbyIP());
+            search.ShowDialog();
+            this.Show();
         }
 
         /// <summary>
@@ -788,7 +791,8 @@ namespace UNO
         /// <param name="e"></param>
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-
+            Settings set = new Settings();
+            set.ShowDialog();
         }
 
         /// <summary>
@@ -1011,6 +1015,12 @@ namespace UNO
         {
             Help help = new Help();
             help.ShowDialog();
+        }
+
+        private void btnSettings2_Click(object sender, RoutedEventArgs e)
+        {
+            Settings set = new Settings();
+            set.ShowDialog();
         }
     }
 }

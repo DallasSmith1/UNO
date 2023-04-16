@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="UNO" Width="1920" Height="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/back.png" Background="#FF476F36">
     <Grid>
-        <Canvas x:Name="cvsMainMenu" Margin="0,-10,0,10">
+        <Canvas x:Name="cvsMainMenu">
             <Button x:Name="btnPlay" Content="Play" Background="Red" Height="73" HorizontalAlignment="Left" Canvas.Left="40" Canvas.Top="420" VerticalAlignment="Top" Width="385" Click="btnPlay_Click" FontSize="48"/>
             <Button x:Name="btnSettings" Content="Settings" Canvas.Left="40" Canvas.Top="665" HorizontalAlignment="Left" VerticalAlignment="Top" Height="74" Width="385" FontSize="48" Click="btnSettings_Click"/>
             <Button x:Name="btnExit" Content="Quit" Background="Red" Height="73" Canvas.Left="40" Canvas.Top="801" Width="385" Click="btnExit_Click" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48"/>
@@ -63,6 +63,7 @@
             </Canvas>
             <Image x:Name="imgPopup" Height="304" Canvas.Left="480" Canvas.Top="122" Width="960" Visibility="Hidden"/>
             <Button x:Name="btnHelp" Content="Help" Canvas.Left="200" Canvas.Top="17" Height="54" Width="107" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Red" FontSize="24" Click="btnHelp_Click"/>
+            <Button x:Name="btnSettings2" Content="Settings" Canvas.Left="312" Canvas.Top="17" Height="54" Width="142" Background="Red" FontSize="24" Click="btnSettings2_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Canvas>
         <Canvas x:Name="cvsWinner" Margin="583,359,571,400" Background="#FFEFB671" Visibility="Hidden">
             <Label x:Name="lblWinner" Content="WINNER" Canvas.Left="80" Canvas.Top="-48" Height="209" Width="626" FontSize="150" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top">
