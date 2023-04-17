@@ -11,6 +11,9 @@ namespace UNO
         private static int MasterVolume = 100;
         private static int SFXVolume = 100;
         private static int MusicVolume = 100;
+        
+        private static int SFXOutput = 100;
+        private static int MusicOutput = 100;
 
 
         /// <summary>
@@ -20,6 +23,7 @@ namespace UNO
         public static void SetMaster(int level)
         {
             MasterVolume = level;
+            ConvertAudio();
         }
 
         /// <summary>
@@ -38,6 +42,7 @@ namespace UNO
         public static void SetSFX(int level) 
         { 
             SFXVolume = level;
+            ConvertAudio();
         }
 
         /// <summary>
@@ -56,6 +61,7 @@ namespace UNO
         public static void SetMusic(int level)
         {
             MusicVolume = level;
+            ConvertAudio();
         }
 
         /// <summary>
@@ -73,7 +79,7 @@ namespace UNO
         /// <returns></returns>
         public static int GetConvertedSFX()
         {
-            return MasterVolume * (SFXVolume / 100);
+            return SFXOutput;
         }
 
         /// <summary>
@@ -82,7 +88,16 @@ namespace UNO
         /// <returns></returns>
         public static int GetConvertedMusic()
         {
-            return MasterVolume * (MusicVolume / 100);
+            return MusicOutput;
+        }
+
+        /// <summary>
+        /// calculates the converted audio 
+        /// </summary>
+        private static void ConvertAudio()
+        {
+            SFXOutput = MasterVolume * (SFXVolume / 100);
+            MusicOutput = MasterVolume * (MusicVolume / 100);
         }
     }
 }
