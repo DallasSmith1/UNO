@@ -35,6 +35,7 @@ namespace UNO
             backgroundworker.WorkerSupportsCancellation = true;
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            PlayBackgroundMusic();
         }
 
         #region variables
@@ -793,6 +794,7 @@ namespace UNO
         {
             Settings set = new Settings();
             set.ShowDialog();
+            GetNewVolumeLevels();
         }
 
         /// <summary>
@@ -1009,8 +1011,6 @@ namespace UNO
             CheckForIP();
             myLobby = null;
         }
-        #endregion
-
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
             Help help = new Help();
@@ -1021,6 +1021,76 @@ namespace UNO
         {
             Settings set = new Settings();
             set.ShowDialog();
+            GetNewVolumeLevels();
         }
+        #endregion
+
+        #region Audio
+        string BackgroundMusic = "..\\..\\..\\audio\\Background.wav";
+        string Tick = "";
+        string Swish = "";
+        string Thwip = "";
+        string Slap = "";
+        string Sparkles = "";
+        string Pickup2 = "";
+        string Pickup4 = "";
+        string Reverse = "";
+        string Skip = "";
+
+        double SFXVolume = 1.0;
+        double MusicVolume = 1.0;
+
+        private void GetNewVolumeLevels()
+        {
+            SFXVolume = Sounds.GetSFX() / 10;
+            MusicVolume = Sounds.GetMusic() / 10;
+            UpdateMusicVolume();
+        }
+
+        /// <summary>
+        /// plays the background music
+        /// </summary>
+        private void PlayBackgroundMusic()
+        {
+            UpdateMusicVolume();
+            mediaMusic.Source = new Uri(BackgroundMusic, UriKind.Relative);
+            mediaMusic.LoadedBehavior = MediaState.Manual;
+            mediaMusic.Play();
+        }
+
+        /// <summary>
+        /// replays the background music when its done
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void restart(object sender, RoutedEventArgs e)
+        {
+            PlayBackgroundMusic();
+        }
+
+        /// <summary>
+        /// Plays an audio sound
+        /// </summary>
+        /// <param name="sound"></param>
+        private void PlayAudio(string sound)
+        {
+            mediaSFX.Volume = SFXVolume;
+            mediaSFX.Source = new Uri(sound);
+            mediaSFX.LoadedBehavior = MediaState.Manual;
+            mediaSFX.Play();
+        }
+
+        /// <summary>
+        /// update the medai music volume
+        /// </summary>
+        private void UpdateMusicVolume()
+        {
+            mediaMusic.UnloadedBehavior = MediaState.Manual;
+            mediaMusic.Pause();
+            mediaMusic.Volume = MusicVolume;
+            mediaMusic.LoadedBehavior = MediaState.Manual;
+            mediaMusic.Play();
+        }
+        #endregion
     }
 }

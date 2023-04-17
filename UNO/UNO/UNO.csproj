@@ -165,4 +165,8 @@
     <Resource Include="images\visuals\skip.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="audio\" />
+  </ItemGroup>
+
 </Project>

@@ -79,5 +79,7 @@
             <Label x:Name="lblPlayerWin" Content="PLAYER" Canvas.Left="218" Canvas.Top="116" Height="98" Width="336" FontSize="72" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Button x:Name="btnEndGame" Content="End game" Canvas.Left="331" Canvas.Top="236" Background="Red" FontSize="24" Click="btnEndGame_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Canvas>
+        <MediaElement x:Name="mediaMusic" HorizontalAlignment="Left" Height="100" Margin="-124,1015,0,0" VerticalAlignment="Top" Width="100" MediaEnded="restart" IsManipulationEnabled="True"/>
+        <MediaElement x:Name="mediaSFX" HorizontalAlignment="Left" Height="100" Margin="-103,874,0,0" VerticalAlignment="Top" Width="100" IsManipulationEnabled="True"/>
     </Grid>
 </Window>

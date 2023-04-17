@@ -22,7 +22,6 @@ namespace UNO
         public Settings()
         {
             InitializeComponent();
-            sdrMaster.Value = Sounds.GetMaster();
             sdrSFX.Value = Sounds.GetSFX();
             sdrMusic.Value = Sounds.GetMusic();
             UpdateValues();
@@ -38,7 +37,6 @@ namespace UNO
         /// <param name="e"></param>
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
-            Sounds.SetMaster((int)sdrMaster.Value);
             Sounds.SetSFX((int)sdrSFX.Value);
             Sounds.SetMusic((int)sdrMusic.Value);
             this.Close();
@@ -49,7 +47,6 @@ namespace UNO
         /// </summary>
         private void UpdateValues()
         {
-            lblMaster.Content =  ((int)sdrMaster.Value).ToString();
             lblSFX.Content = ((int)sdrSFX.Value).ToString();
             lblMusic.Content = ((int)sdrMusic.Value).ToString();
         }
