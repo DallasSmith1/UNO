@@ -5,14 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UNO"
         mc:Ignorable="d"
-        Title="UNO" Width="1920" Height="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/back.png" Background="#FF476F36">
+        Title="UNO" Width="1920" Height="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/back.png">
+    <Window.Background>
+        <ImageBrush ImageSource="/background.png"/>
+    </Window.Background>
     <Grid>
-        <Canvas x:Name="cvsMainMenu">
-            <Button x:Name="btnPlay" Content="Play" Background="Red" Height="73" HorizontalAlignment="Left" Canvas.Left="40" Canvas.Top="420" VerticalAlignment="Top" Width="385" Click="btnPlay_Click" FontSize="48"/>
-            <Button x:Name="btnSettings" Content="Settings" Canvas.Left="40" Canvas.Top="665" HorizontalAlignment="Left" VerticalAlignment="Top" Height="74" Width="385" FontSize="48" Click="btnSettings_Click"/>
-            <Button x:Name="btnExit" Content="Quit" Background="Red" Height="73" Canvas.Left="40" Canvas.Top="801" Width="385" Click="btnExit_Click" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48"/>
-            <Button x:Name="btnMultiplayer" Content="Multiplayer" Background="#FFA29898" BorderBrush="#FF655C5C" Height="76" Width="379" FontSize="48" HorizontalAlignment="Left" Canvas.Left="46" Canvas.Top="532" VerticalAlignment="Center" Click="btnMultiplayer_Click"/>
-            <Button x:Name="btnRefresh" Content="Refresh" Canvas.Left="462" Canvas.Top="532" Height="76" Width="150" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Click="btnRefresh_Click"/>
+        <Canvas x:Name="cvsMainMenu" Margin="0,10,0,-10">
+            <Button x:Name="btnPlay" Content="Play" Background="Red" Height="73" HorizontalAlignment="Left" Canvas.Left="40" Canvas.Top="420" VerticalAlignment="Top" Width="385" Click="btnPlay_Click" FontSize="48" MouseEnter="MouseHover_PlayTick"/>
+            <Button x:Name="btnSettings" Content="Settings" Canvas.Left="40" Canvas.Top="665" HorizontalAlignment="Left" VerticalAlignment="Top" Height="74" Width="385" FontSize="48" Click="btnSettings_Click" MouseEnter="MouseHover_PlayTick"/>
+            <Button x:Name="btnExit" Content="Quit" Background="Red" Height="73" Canvas.Left="40" Canvas.Top="801" Width="385" Click="btnExit_Click" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48" MouseEnter="MouseHover_PlayTick"/>
+            <Button x:Name="btnMultiplayer" Content="Multiplayer" Background="#FFA29898" BorderBrush="#FF655C5C" Height="76" Width="379" FontSize="48" HorizontalAlignment="Left" Canvas.Left="46" Canvas.Top="532" VerticalAlignment="Center" Click="btnMultiplayer_Click" MouseEnter="MouseHover_PlayTick"/>
+            <Button x:Name="btnRefresh" Content="Refresh" Canvas.Left="462" Canvas.Top="532" Height="76" Width="150" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Click="btnRefresh_Click" MouseEnter="MouseHover_PlayTick"/>
             <Image Height="466" Canvas.Left="1215" Canvas.Top="270" Width="315" Source="/images/UNOCards/back.png" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -35,7 +38,11 @@
             </Image>
             <Image Height="532" Canvas.Left="924" Canvas.Top="190" Width="496" Source="/images/UNOCards/back.png"/>
         </Canvas>
-        <Canvas x:Name="cvsSinglePlayer">
+        <Canvas x:Name="cvsSinglePlayer" Margin="-10,-2,10,1">
+            <Canvas x:Name="cvsMyHandGlow" Height="54" Width="1368" Canvas.Left="280" Canvas.Top="900" HorizontalAlignment="Center" VerticalAlignment="Top" Opacity="0" Background="Red"/>
+            <Canvas x:Name="cvsPlayer3Glow" Height="58" Width="486" Canvas.Left="716" Canvas.Top="292" Background="Red" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Canvas x:Name="cvsPlayer4Glow" Height="58" Width="485" Canvas.Left="1405" Canvas.Top="515" Background="Red" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Canvas x:Name="cvsPlayer2Glow" Height="58" Width="486" Canvas.Left="38" Canvas.Top="515" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Red"/>
             <Image x:Name="imgRotation" Height="100" Canvas.Left="891" Canvas.Top="457" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/images/visuals/clockwise.png" Visibility="Visible" />
             <Label x:Name="lblPlayer1" Content="Player 1" Canvas.Left="913" Canvas.Top="984" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFF34848"/>
             <Label x:Name="lblPlayer2" Content="Player 2" Canvas.Left="77" Canvas.Top="232" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF38F48"/>
@@ -47,11 +54,11 @@
             <Canvas x:Name="cvsPlayer2" Height="298" Width="485" Canvas.Left="38" Canvas.Top="289" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Canvas x:Name="cvsPlayer3" Height="298" Width="485" Canvas.Left="717" Canvas.Top="66" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Canvas x:Name="cvsPlayer4" Height="298" Width="485" Canvas.Left="1405" Canvas.Top="289" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button x:Name="btnMainMenu" Content="Quit Game" Canvas.Left="30" Canvas.Top="17" Height="54" Width="162" Background="Red" FontSize="22" Click="btnMainMenu_Click"/>
-            <Label x:Name="lblPlayer1Number" Content="0" Canvas.Left="1025" Canvas.Top="969" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label x:Name="lblPlayer2Number" Content="0" Canvas.Left="200" Canvas.Top="212" Height="72" Width="80" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label x:Name="lblPlayer3Number" Content="0" Canvas.Left="1025" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label x:Name="lblPlayer4Number" Content="0" Canvas.Left="1674" Canvas.Top="212" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button x:Name="btnMainMenu" Content="Quit Game" Canvas.Left="30" Canvas.Top="17" Height="54" Width="162" Background="Red" FontSize="22" Click="btnMainMenu_Click" MouseEnter="MouseHover_PlayTick"/>
+            <Label x:Name="lblPlayer1Number" Content="0" Canvas.Left="1025" Canvas.Top="969" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="lblPlayer2Number" Content="0" Canvas.Left="200" Canvas.Top="212" Height="72" Width="80" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="lblPlayer3Number" Content="0" Canvas.Left="1025" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="lblPlayer4Number" Content="0" Canvas.Left="1674" Canvas.Top="212" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White"/>
             <Image x:Name="imgHoverCard" Height="236" Canvas.Left="1674" Canvas.Top="662" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="lblIsPlayable" Content="" Canvas.Left="1675" Canvas.Top="620" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
             <TextBox x:Name="tbxCardDescription" Canvas.Left="1675" TextWrapping="Wrap" Canvas.Top="912" Width="150" Background="{x:Null}" HorizontalAlignment="Center" Height="118" VerticalAlignment="Top" FontSize="14" BorderBrush="{x:Null}" IsEnabled="False"/>
@@ -62,8 +69,8 @@
                 <Button x:Name="btnGreen" Content="" Height="150" Width="150" Background="#FF37FF00" BorderBrush="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="150" Canvas.Top="150" Click="btnGreen_Click"/>
             </Canvas>
             <Image x:Name="imgPopup" Height="304" Canvas.Left="480" Canvas.Top="122" Width="960" Visibility="Hidden"/>
-            <Button x:Name="btnHelp" Content="Help" Canvas.Left="200" Canvas.Top="17" Height="54" Width="107" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Red" FontSize="24" Click="btnHelp_Click"/>
-            <Button x:Name="btnSettings2" Content="Settings" Canvas.Left="312" Canvas.Top="17" Height="54" Width="142" Background="Red" FontSize="24" Click="btnSettings2_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button x:Name="btnHelp" Content="Help" Canvas.Left="200" Canvas.Top="17" Height="54" Width="107" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Red" FontSize="24" Click="btnHelp_Click" MouseEnter="MouseHover_PlayTick"/>
+            <Button x:Name="btnSettings2" Content="Settings" Canvas.Left="312" Canvas.Top="17" Height="54" Width="142" Background="Red" FontSize="24" Click="btnSettings2_Click" HorizontalAlignment="Left" VerticalAlignment="Center" MouseEnter="MouseHover_PlayTick"/>
         </Canvas>
         <Canvas x:Name="cvsWinner" Margin="583,359,571,400" Background="#FFEFB671" Visibility="Hidden">
             <Label x:Name="lblWinner" Content="WINNER" Canvas.Left="80" Canvas.Top="-48" Height="209" Width="626" FontSize="150" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -81,5 +88,6 @@
         </Canvas>
         <MediaElement x:Name="mediaMusic" HorizontalAlignment="Left" Height="100" Margin="-124,1015,0,0" VerticalAlignment="Top" Width="100" MediaEnded="restart" IsManipulationEnabled="True"/>
         <MediaElement x:Name="mediaSFX" HorizontalAlignment="Left" Height="100" Margin="-103,874,0,0" VerticalAlignment="Top" Width="100" IsManipulationEnabled="True"/>
+        <MediaElement x:Name="mediaAmbient" HorizontalAlignment="Left" Height="100" Margin="-103,722,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>

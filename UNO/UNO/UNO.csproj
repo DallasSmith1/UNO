@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="back.png" />
+    <None Remove="background.png" />
     <None Remove="images\UNOCards\back.png" />
     <None Remove="images\UNOCards\black+4.png" />
     <None Remove="images\UNOCards\blackswap.png" />
@@ -88,6 +89,7 @@
 
   <ItemGroup>
     <Resource Include="back.png" />
+    <Resource Include="background.png" />
     <Resource Include="images\UNOCards\black+4.png" />
     <Resource Include="images\UNOCards\back.png" />
     <Resource Include="images\UNOCards\blackswap.png" />
@@ -163,10 +165,6 @@
     <Resource Include="images\visuals\clockwise.png" />
     <Resource Include="images\visuals\reverse.png" />
     <Resource Include="images\visuals\skip.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="audio\" />
   </ItemGroup>
 
 </Project>

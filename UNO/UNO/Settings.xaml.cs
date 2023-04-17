@@ -24,6 +24,7 @@ namespace UNO
             InitializeComponent();
             sdrSFX.Value = Sounds.GetSFX();
             sdrMusic.Value = Sounds.GetMusic();
+            sdrAmbient.Value = Sounds.GetAmbient();
             UpdateValues();
             initialized = true;
         }
@@ -39,6 +40,7 @@ namespace UNO
         {
             Sounds.SetSFX((int)sdrSFX.Value);
             Sounds.SetMusic((int)sdrMusic.Value);
+            Sounds.SetAmbient((int)sdrAmbient.Value);
             this.Close();
         }
 
@@ -49,11 +51,7 @@ namespace UNO
         {
             lblSFX.Content = ((int)sdrSFX.Value).ToString();
             lblMusic.Content = ((int)sdrMusic.Value).ToString();
-        }
-
-        private void MasterChange(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (initialized) {UpdateValues();};
+            lblAmbient.Content = ((int)sdrAmbient.Value).ToString();
         }
 
         private void SFXChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -62,6 +60,11 @@ namespace UNO
         }
 
         private void MusicChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (initialized) { UpdateValues(); };
+        }
+
+        private void AmbientChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (initialized) { UpdateValues(); };
         }

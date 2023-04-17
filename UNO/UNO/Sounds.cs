@@ -14,6 +14,7 @@ namespace UNO
         private static double MasterVolume = 10;
         private static double SFXVolume = 10;
         private static double MusicVolume = 10;
+        private static double AmbientVolume = 10;
 
         /// <summary>
         /// sets the master volume
@@ -67,6 +68,24 @@ namespace UNO
         public static double GetMusic() 
         { 
             return MusicVolume;
+        }
+
+        /// <summary>
+        /// setst he ambient audio 
+        /// </summary>
+        /// <param name="level"></param>
+        public static void SetAmbient(double level)
+        {
+            AmbientVolume = level;
+        }
+
+        /// <summary>
+        /// getst he ambient volume
+        /// </summary>
+        /// <returns></returns>
+        public static double GetAmbient()
+        {
+            return AmbientVolume;
         }
     }
 }

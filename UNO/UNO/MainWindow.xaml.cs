@@ -286,6 +286,7 @@ namespace UNO
         /// <param name="card"></param>
         private void HoverCard(Image card)
         {
+            //PlayAmbient(Swish);
             lblIsPlayable.Visibility = Visibility.Visible;
             imgHoverCard.Visibility = Visibility.Visible;
             tbxCardDescription.Visibility = Visibility.Visible;
@@ -331,6 +332,7 @@ namespace UNO
         /// <param name="colour"></param>
         private void SetTopCardColour(string colour)
         {
+            PlayAmbient(Sparkles);
             myLobby.SetCurrentColour(colour);
             UNOCard liveCard = myLobby.GetLiveCard();
             liveCard.SetColour(colour);
@@ -365,23 +367,31 @@ namespace UNO
         private void UpdateCurrentPlayerLabel()
         {
             lblPlayer1.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(NotSelectedRBG[0], NotSelectedRBG[1], NotSelectedRBG[2]));
+            cvsMyHandGlow.Opacity = 0;
             lblPlayer2.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(NotSelectedRBG[0], NotSelectedRBG[1], NotSelectedRBG[2]));
+            cvsPlayer2Glow.Opacity = 0;
             lblPlayer3.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(NotSelectedRBG[0], NotSelectedRBG[1], NotSelectedRBG[2]));
+            cvsPlayer3Glow.Opacity = 0;
             lblPlayer4.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(NotSelectedRBG[0], NotSelectedRBG[1], NotSelectedRBG[2]));
+            cvsPlayer4Glow.Opacity = 0;
             if (myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[0])
             {
+                cvsMyHandGlow.Opacity = 0.5;
                 lblPlayer1.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(SelectedRBG[0], SelectedRBG[1], SelectedRBG[2]));
             }
             else if (myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[1])
             {
+                cvsPlayer2Glow.Opacity = 0.5;
                 lblPlayer2.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(SelectedRBG[0], SelectedRBG[1], SelectedRBG[2]));
             }
             else if (myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[2])
             {
+                cvsPlayer3Glow.Opacity = 0.5;
                 lblPlayer3.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(SelectedRBG[0], SelectedRBG[1], SelectedRBG[2]));
             }
             else if (myLobby.GetCurrentPlayer() == myLobby.GetPlayers()[3])
             {
+                cvsPlayer4Glow.Opacity = 0.5;
                 lblPlayer4.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(SelectedRBG[0], SelectedRBG[1], SelectedRBG[2]));
             }
         }
@@ -394,8 +404,9 @@ namespace UNO
         private void Backgroundworker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
             // if placed a card
-            if(e.ProgressPercentage == 1)
+            if (e.ProgressPercentage == 1)
             {
+                PlayAudio(Slap);
                 // if +4 or swap card is played, randomly select a colour for it to change to
                 if (myLobby.GetLiveCard().GetColour() == "black")
                 {
@@ -429,29 +440,35 @@ namespace UNO
                 {
                     UpdateRotationImage();
                     ShowPopUp("reverse");
+                    PlayAudio(Reverse);
                 }
                 else if (myLobby.GetLiveCard().GetValue() == "skip")
                 {
                     ShowPopUp("skip");
+                    PlayAudio(Skip);
                 }
                 else if (myLobby.GetLiveCard().GetValue() == "+2")
                 {
                     ShowPopUp("2");
+                    PlayAudio(Pickup2);
                 }
                 
                 else if (myLobby.GetLiveCard().GetValue() == "+4")
                 {
                     ShowPopUp("4");
+                    PlayAudio(Pickup4);
                 }
 
                 RefreshHands();
             }
             else if(e.ProgressPercentage == 2)
             {
+                PlayAudio(Slap);
                 PerformWinner();
             }
             else
             {
+                PlayAudio(Thwip);
                 RefreshHands();
             }
 
@@ -807,6 +824,7 @@ namespace UNO
             if (cvsColours.Visibility == Visibility.Hidden && !backgroundworker.IsBusy 
                 && myLobby.GetPlayers()[0].MakeMove(myLobby.GetNextPlayer(), myLobby) == null)
             {
+                PlayAudio(Thwip);
                 myLobby.GetPlayers()[0].AddCard(myLobby.GetNewCard());
                 RefreshHands();
             }
@@ -889,6 +907,10 @@ namespace UNO
                             //if a +4 or swap card, show the colours canvas to select a colour
                             if (unoCard.GetValue() == "+4" || unoCard.GetValue() == "swap")
                             {
+                                if (unoCard.GetValue() == "+4")
+                                {
+                                    PlayAudio(Pickup4);
+                                }
                                 cvsColours.Visibility = Visibility.Visible;
                             }
                             else
@@ -897,27 +919,36 @@ namespace UNO
                                 {
                                     UpdateRotation();
                                     UpdateRotationImage();
+                                    PlayAudio(Reverse);
                                     ShowPopUp("reverse");
                                 }
                                 else if (myLobby.GetLiveCard().GetValue() == "skip")
                                 {
                                     PerformSkip();
+                                    PlayAudio(Skip);
                                     ShowPopUp("skip");
                                 }
                                 else if (myLobby.GetLiveCard().GetValue() == "+2")
                                 {
                                     PerformPickup(2);
+                                    PlayAudio(Pickup2);
                                     ShowPopUp("2");
+                                }
+                                else
+                                {
+                                    PlayAudio(Slap);
                                 }
                                 if (myLobby.GetPlayers()[0].GetCards().Count == 0)
                                 {
                                     PerformWinner();
+                                    PlayAudio(Winner);
                                 }
                                 else
                                 {
                                     RunBotTurns();
                                 }
                             }
+                            
                         }
                     }
                 }
@@ -1027,23 +1058,26 @@ namespace UNO
 
         #region Audio
         string BackgroundMusic = "..\\..\\..\\audio\\Background.wav";
-        string Tick = "";
-        string Swish = "";
-        string Thwip = "";
-        string Slap = "";
-        string Sparkles = "";
-        string Pickup2 = "";
-        string Pickup4 = "";
-        string Reverse = "";
-        string Skip = "";
+        string Tick = "..\\..\\..\\audio\\Tick.wav";
+        string Swish = "..\\..\\..\\audio\\Swoosh.wav";
+        string Thwip = "..\\..\\..\\audio\\Thwip.wav";
+        string Slap = "..\\..\\..\\audio\\Slap.mp3";
+        string Sparkles = "..\\..\\..\\audio\\Sparkles.wav";
+        string Pickup2 = "..\\..\\..\\audio\\Pickup2.wav";
+        string Pickup4 = "..\\..\\..\\audio\\Pickup4.wav";
+        string Reverse = "..\\..\\..\\audio\\Reverse.wav";
+        string Skip = "..\\..\\..\\audio\\SkipTurn.wav";
+        string Winner = "..\\..\\..\\audio\\Winner.wav";
 
         double SFXVolume = 1.0;
         double MusicVolume = 1.0;
+        double AmbientVolume = 1.0;
 
         private void GetNewVolumeLevels()
         {
             SFXVolume = Sounds.GetSFX() / 10;
             MusicVolume = Sounds.GetMusic() / 10;
+            AmbientVolume = Sounds.GetAmbient() / 10;
             UpdateMusicVolume();
         }
 
@@ -1075,10 +1109,23 @@ namespace UNO
         private void PlayAudio(string sound)
         {
             mediaSFX.Volume = SFXVolume;
-            mediaSFX.Source = new Uri(sound);
+            mediaSFX.Source = new Uri(sound, UriKind.Relative);
             mediaSFX.LoadedBehavior = MediaState.Manual;
             mediaSFX.Play();
         }
+
+        /// <summary>
+        /// plays an ambient sound
+        /// </summary>
+        /// <param name="sound"></param>
+        private void PlayAmbient(string sound)
+        {
+            mediaAmbient.Volume = AmbientVolume;
+            mediaAmbient.Source = new Uri(sound, UriKind.Relative);
+            mediaAmbient.LoadedBehavior = MediaState.Manual;
+            mediaAmbient.Play();
+        }
+
 
         /// <summary>
         /// update the medai music volume
@@ -1091,6 +1138,11 @@ namespace UNO
             mediaMusic.LoadedBehavior = MediaState.Manual;
             mediaMusic.Play();
         }
+        private void MouseHover_PlayTick(object sender, MouseEventArgs e)
+        {
+            PlayAmbient(Tick);
+        }
         #endregion
+
     }
 }
