@@ -26,6 +26,7 @@ namespace UNO
             sdrMusic.Value = Sounds.GetMusic();
             sdrAmbient.Value = Sounds.GetAmbient();
             UpdateValues();
+            SetAudio();
             initialized = true;
         }
 
@@ -38,9 +39,12 @@ namespace UNO
         /// <param name="e"></param>
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
-            Sounds.SetSFX((int)sdrSFX.Value);
-            Sounds.SetMusic((int)sdrMusic.Value);
-            Sounds.SetAmbient((int)sdrAmbient.Value);
+            if (!Sounds.IsMuted())
+            {
+                Sounds.SetSFX((int)sdrSFX.Value);
+                Sounds.SetMusic((int)sdrMusic.Value);
+                Sounds.SetAmbient((int)sdrAmbient.Value);
+            }
             this.Close();
         }
 
@@ -67,6 +71,61 @@ namespace UNO
         private void AmbientChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (initialized) { UpdateValues(); };
+        }
+
+        /// <summary>
+        /// mutes the audio
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Mute_Click(object sender, RoutedEventArgs e)
+        {
+            SwapMute();
+        }
+
+        private void SwapMute()
+        {
+            if (!Sounds.IsMuted())
+            {
+                Sounds.SetMute(true);
+            }
+            else
+            {
+                Sounds.SetMute(false);
+            }
+            SetAudio();
+            sdrSFX.Value = Sounds.GetSFX();
+            sdrMusic.Value = Sounds.GetMusic();
+            sdrAmbient.Value = Sounds.GetAmbient();
+            UpdateValues();
+        }
+
+        private void GetSoundLevels()
+        {
+            sdrSFX.Value = Sounds.GetSFX();
+            sdrMusic.Value = Sounds.GetMusic();
+            sdrAmbient.Value = Sounds.GetAmbient();
+        }
+
+        private void SetAudio()
+        {
+            if (Sounds.IsMuted())
+            {
+                btnMute.Content = "Unmute";
+                btnMute.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 234, 0));
+                sdrAmbient.IsEnabled = false;
+                sdrMusic.IsEnabled = false;
+                sdrSFX.IsEnabled = false;
+            }
+            else
+            {
+                btnMute.Content = "Mute";
+                btnMute.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 0, 0));
+                sdrAmbient.IsEnabled = true;
+                sdrMusic.IsEnabled = true;
+                sdrSFX.IsEnabled = true;
+            }
+            UpdateValues();
         }
     }
 }

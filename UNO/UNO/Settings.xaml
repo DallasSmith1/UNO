@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="Settings" Height="249" Width="442" Background="#FF476F36" WindowStartupLocation="CenterScreen" MinWidth="442" MaxWidth="442" MinHeight="249" MaxHeight="249" ResizeMode="NoResize">
     <Grid>
-        <Label Content="SFX Volume" HorizontalAlignment="Left" Margin="24,68,0,0" VerticalAlignment="Top"/>
-        <Slider x:Name="sdrSFX" HorizontalAlignment="Left" Margin="102,72,0,0" VerticalAlignment="Top" Width="273" Value="100" ValueChanged="SFXChanged" Cursor="Hand"/>
-        <Label x:Name="lblSFX" Content="100" HorizontalAlignment="Left" Margin="386,68,0,0" VerticalAlignment="Top"/>
-        <Label Content="Music Volume" HorizontalAlignment="Left" Margin="15,114,0,0" VerticalAlignment="Top"/>
-        <Slider x:Name="sdrMusic" HorizontalAlignment="Left" Margin="101,118,0,0" VerticalAlignment="Top" Width="273" Value="100" ValueChanged="MusicChange" Cursor="Hand"/>
-        <Label x:Name="lblMusic" Content="100" HorizontalAlignment="Left" Margin="386,114,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnApply" Content="Apply" HorizontalAlignment="Center" Margin="0,157,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="29" Width="74" Background="Red" Click="btnApply_Click">
+        <Label Content="SFX Volume" HorizontalAlignment="Left" Margin="27,97,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="sdrSFX" HorizontalAlignment="Left" Margin="105,101,0,0" VerticalAlignment="Top" Width="273" Value="100" ValueChanged="SFXChanged" Cursor="Hand"/>
+        <Label x:Name="lblSFX" Content="100" HorizontalAlignment="Left" Margin="389,97,0,0" VerticalAlignment="Top"/>
+        <Label Content="Music Volume" HorizontalAlignment="Left" Margin="18,143,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="sdrMusic" HorizontalAlignment="Left" Margin="104,147,0,0" VerticalAlignment="Top" Width="273" Value="100" ValueChanged="MusicChange" Cursor="Hand"/>
+        <Label x:Name="lblMusic" Content="100" HorizontalAlignment="Left" Margin="389,143,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnApply" Content="Apply" HorizontalAlignment="Left" Margin="187,186,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="29" Width="74" Background="Red" Click="btnApply_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -23,9 +23,10 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Label Content="Ambient Volume" HorizontalAlignment="Left" Margin="8,28,0,0" VerticalAlignment="Top"/>
-        <Slider x:Name="sdrAmbient" HorizontalAlignment="Left" Margin="102,32,0,0" VerticalAlignment="Top" Width="273" Value="100" ValueChanged="AmbientChanged" Cursor="Hand"/>
-        <Label x:Name="lblAmbient" Content="100" HorizontalAlignment="Left" Margin="386,28,0,0" VerticalAlignment="Top"/>
+        <Label Content="Ambient Volume" HorizontalAlignment="Left" Margin="11,57,0,0" VerticalAlignment="Top"/>
+        <Slider x:Name="sdrAmbient" HorizontalAlignment="Left" Margin="105,61,0,0" VerticalAlignment="Top" Width="273" Value="100" ValueChanged="AmbientChanged" Cursor="Hand"/>
+        <Label x:Name="lblAmbient" Content="100" HorizontalAlignment="Left" Margin="389,57,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnMute" Content="Mute" HorizontalAlignment="Left" Margin="333,18,0,0" VerticalAlignment="Top" Width="71" Background="Red" Click="Mute_Click"/>
 
     </Grid>
 </Window>

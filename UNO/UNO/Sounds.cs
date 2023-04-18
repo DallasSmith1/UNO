@@ -11,28 +11,10 @@ namespace UNO
 {
     internal class Sounds
     {
-        private static double MasterVolume = 10;
-        private static double SFXVolume = 10;
-        private static double MusicVolume = 10;
-        private static double AmbientVolume = 10;
-
-        /// <summary>
-        /// sets the master volume
-        /// </summary>
-        /// <param name="level"></param>
-        public static void SetMaster(int level)
-        {
-            MasterVolume = level;
-        }
-
-        /// <summary>
-        /// getst he master volume
-        /// </summary>
-        /// <returns></returns>
-        public static double GetMaster() 
-        { 
-            return MasterVolume;
-        }
+        private static bool Mute = false;
+        private static double SFXVolume = 2;
+        private static double MusicVolume = 1;
+        private static double AmbientVolume = 1;
 
         /// <summary>
         /// sets the SFX volume
@@ -49,7 +31,14 @@ namespace UNO
         /// <returns></returns>
         public static double GetSFX() 
         { 
-            return SFXVolume;
+            if (Mute)
+            {
+                return 0;
+            }
+            else
+            {
+                return SFXVolume;
+            }
         }
 
         /// <summary>
@@ -66,8 +55,15 @@ namespace UNO
         /// </summary>
         /// <returns></returns>
         public static double GetMusic() 
-        { 
-            return MusicVolume;
+        {
+            if (Mute)
+            {
+                return 0;
+            }
+            else
+            {
+                return MusicVolume;
+            }
         }
 
         /// <summary>
@@ -85,7 +81,32 @@ namespace UNO
         /// <returns></returns>
         public static double GetAmbient()
         {
-            return AmbientVolume;
+            if (Mute)
+            {
+                return 0;
+            }
+            else
+            {
+                return AmbientVolume;
+            }
+        }
+
+        /// <summary>
+        /// sets whether the sounds are muted or not
+        /// </summary>
+        /// <param name="mute"></param>
+        public static void SetMute(bool mute)
+        {
+            Mute = mute;
+        }
+
+        /// <summary>
+        /// gets whether the audio is muted or not
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsMuted()
+        {
+            return Mute;
         }
     }
 }

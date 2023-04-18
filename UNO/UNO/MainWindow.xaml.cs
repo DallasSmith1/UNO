@@ -410,6 +410,7 @@ namespace UNO
                 // if +4 or swap card is played, randomly select a colour for it to change to
                 if (myLobby.GetLiveCard().GetColour() == "black")
                 {
+                    PlayAmbient(Sparkles);
                     // pick a colour based off of what the bot has in its hand
                     string colour = myLobby.GetCurrentPlayer().ChooseColour();
 
@@ -1069,9 +1070,9 @@ namespace UNO
         string Skip = "..\\..\\..\\audio\\SkipTurn.wav";
         string Winner = "..\\..\\..\\audio\\Winner.wav";
 
-        double SFXVolume = 1.0;
-        double MusicVolume = 1.0;
-        double AmbientVolume = 1.0;
+        double SFXVolume = 0.2;
+        double MusicVolume = 0.1;
+        double AmbientVolume = 0.1;
 
         private void GetNewVolumeLevels()
         {
