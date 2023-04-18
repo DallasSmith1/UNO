@@ -463,7 +463,7 @@ namespace UNO
             }
             else if(e.ProgressPercentage == 2)
             {
-                PlayAudio(Slap);
+                PlayAudio(Winner);
                 PerformWinner();
             }
             else

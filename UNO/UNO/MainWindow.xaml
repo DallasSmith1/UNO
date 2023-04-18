@@ -61,7 +61,7 @@
             <Label x:Name="lblPlayer4Number" Content="0" Canvas.Left="1674" Canvas.Top="212" Height="72" Width="81" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White"/>
             <Image x:Name="imgHoverCard" Height="236" Canvas.Left="1674" Canvas.Top="662" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="lblIsPlayable" Content="" Canvas.Left="1675" Canvas.Top="620" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
-            <TextBox x:Name="tbxCardDescription" Canvas.Left="1675" TextWrapping="Wrap" Canvas.Top="912" Width="150" Background="{x:Null}" HorizontalAlignment="Center" Height="118" VerticalAlignment="Top" FontSize="14" BorderBrush="{x:Null}" IsEnabled="False"/>
+            <TextBox x:Name="tbxCardDescription" Canvas.Left="1675" TextWrapping="Wrap" Canvas.Top="912" Width="150" Background="{x:Null}" HorizontalAlignment="Center" Height="118" VerticalAlignment="Top" FontSize="14" BorderBrush="{x:Null}" IsEnabled="False" Foreground="White"/>
             <Canvas x:Name="cvsColours" Height="300" Width="300" Canvas.Left="810" Canvas.Top="382" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" >
                 <Button x:Name="btnRed" Content="" Height="150" Width="150" Background="Red" BorderBrush="{x:Null}" Click="btnRed_Click"/>
                 <Button x:Name="btnBlue" Content="" Height="150" Width="150" Background="#FF001BFF" BorderBrush="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="150" Click="btnBlue_Click"/>
