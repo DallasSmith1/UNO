@@ -3,7 +3,6 @@ C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.deps
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.runtimeconfig.json
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.dll
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\bin\Debug\net6.0-windows\UNO.pdb
-C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.csproj.AssemblyReference.cache
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\MainWindow.g.cs
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\App.g.cs
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO_MarkupCompile.cache
@@ -46,3 +45,4 @@ C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\LobbySea
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\LobbySearch.baml
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\Settings.g.cs
 C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\Settings.baml
+C:\Users\dalla\Desktop\VS Programs\UNO\UNO\UNO\obj\Debug\net6.0-windows\UNO.sourcelink.json
